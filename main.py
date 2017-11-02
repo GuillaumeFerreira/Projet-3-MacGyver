@@ -35,9 +35,13 @@ def main():
         nb=nb+22.5
         
     fenetre = Tk()
+    #Titre de la fenêtre Tkinter
     fenetre.title('Labyrinthe P3')
+    #Dimensions de la fenêtre
     fenetre.geometry("{0}x{1}+0+0".format(fenetre.winfo_screenwidth()-15, fenetre.winfo_screenheight()-15))
+    #Chargement de la variable de l image photo
     photo = PhotoImage(file="images/wall.gif")
+    #ouverture du fichier qui decrit 
     f = open("Mac.txt", "r")
    
     
