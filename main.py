@@ -129,7 +129,10 @@ def main():
     FenGardien.place(x=50, y=400)
     Label(FenGardien, textvariable=stringVarGardien).pack()
     stringVarGardien.set("Personne ne sortira tant que je ne serai pas satisfait!")
+
     
+    ###############################################################################
+    #Initialisation et construction de labyrinthe
     i=0
     for line in f:
         
@@ -161,7 +164,7 @@ def main():
         
         i=i+1
     f.close()
-
+    ################################################################################
 
 
 
@@ -171,17 +174,13 @@ def main():
     MacX=51
     MacY=46
     i=1
+    
     #################################################
     #Creation de la liste d objets
- 
-            
     ListeObjet=[]
-
     for i in range(6):
         newObjet=Objet()
         ListeObjet.append(newObjet)
-        
-       
     #################################################
 
         
@@ -620,18 +619,7 @@ def toucheeventL(evt):
         pass
     ramasserObj(MacX,MacY)
     gagner(MacX,MacY)
-'''    
-    if  PosYhaut==PosYbas:
-        if PosG==PosD:
-            print("regarder droit image numero "+str((PosYbas*15)+PosG-15))
-            
-        else:
-            print("regarder droit image numero "+str((PosYbas*15)+PosG-15))
-    else:
-        if PosG==PosD:
-            print("regarder droit image numero "+str((PosYbas*15)+PosG-15)+" et "+str((PosYhaut*15)+PosG-15))
-        else:
-            print("regarder droit image numero "+str((PosYbas*15)+PosG-15)+" et "+str((PosYhaut*15)+PosG-15))'''
+
 
 def toucheeventU(evt):
     global MacX
