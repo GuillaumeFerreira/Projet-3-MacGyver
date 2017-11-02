@@ -9,7 +9,8 @@ from PIL import Image, ImageTk
 import datetime
 import random
 
-
+#################################################################################################
+###############################  Définition des Class  ##########################################
 class Objet:
         numero_objet=0
         
@@ -30,7 +31,12 @@ class Objet:
             coord= str(x) + "," + str(y)
             return coord
 
-			
+##################################################################################################
+
+
+
+
+        
 def main():
     
     global fenetre
@@ -167,13 +173,14 @@ def main():
     i=1
     #################################################
     #Creation de la liste d objets
+ 
+            
     ListeObjet=[]
 
     for i in range(6):
-        
         newObjet=Objet()
         ListeObjet.append(newObjet)
-        print("ajout " + str(newObjet)+" "+ str(newObjet.numero_objet)+" "+ str(newObjet.x)+ " "+ str(newObjet.y))
+        
        
     #################################################
 
