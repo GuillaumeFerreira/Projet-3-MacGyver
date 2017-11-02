@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from multiprocessing import Process
+
 from tkinter import *
 import os
 import re
@@ -14,15 +14,15 @@ class Objet:
         numero_objet=0
         
         def __init__(self):
-            
+            #Incremente le numéro à chaque Objet
             Objet.numero_objet += 1
             
             coord=self.coordValide()
             self.x=float(coord.split(",")[0])
             self.y=float(coord.split(",")[1])
             
-            self.photo=""
-
+            
+        
         def coordValide(self):
             
             x=random.choice(listeCoordX)
@@ -32,7 +32,7 @@ class Objet:
 
 			
 def main():
-    sys.setrecursionlimit(1500)
+    
     global fenetre
     global MacX
     global MacY
