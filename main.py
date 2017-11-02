@@ -9,6 +9,28 @@ from PIL import Image, ImageTk
 import datetime
 import random
 
+
+class Objet:
+        numero_objet=0
+        
+        def __init__(self):
+            
+            Objet.numero_objet += 1
+            
+            coord=self.coordValide()
+            self.x=float(coord.split(",")[0])
+            self.y=float(coord.split(",")[1])
+            
+            self.photo=""
+
+        def coordValide(self):
+            
+            x=random.choice(listeCoordX)
+            y=random.choice(listeCoordy)
+            coord= str(x) + "," + str(y)
+            return coord
+
+			
 def main():
     sys.setrecursionlimit(1500)
     global fenetre
@@ -121,34 +143,7 @@ def main():
 
 
 
-    class Objet:
-        numero_objet=0
-        
-        def __init__(self):
-            
-            Objet.numero_objet += 1
-            
-            coord=self.coordValide()
-            self.x=float(coord.split(",")[0])
-            self.y=float(coord.split(",")[1])
-            
-            self.photo=""
-
-        def coordValide(self):
-            
-            x=random.choice(listeCoordX)
-            y=random.choice(listeCoordy)
-            coord= str(x) + "," + str(y)
-            return coord
-        def listeImgDec(self):
-            listeImgDecObj=[]
-            listeImgDecObj.append(-197)
-            listeImgDecObj.append(-158)
-            listeImgDecObj.append(-4)
-            listeImgDecObj.append(-120)
-            listeImgDecObj.append(-81)
-            listeImgDecObj.append(-42)
-            return listeImgDecObj
+    
 
         
     MacX=51
