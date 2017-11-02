@@ -48,6 +48,10 @@ def main():
     RevenuSortiZone=True
     nbObjRamasser=[]
     ListeObjetCanvas=[]
+
+
+    ##################################################################################################
+    #Construction de la liste de coordonnées permetant d'optimiser les chances du coordonnées valides
     listeCoordX=[]
     listeCoordy=[]
     nb=23
@@ -55,6 +59,8 @@ def main():
         listeCoordX.append(nb)
         listeCoordy.append(nb)
         nb=nb+22.5
+    ##################################################################################################
+        
         
     fenetre = Tk()
     #Titre de la fenêtre Tkinter
@@ -115,7 +121,7 @@ def main():
         extension = e.group(1)
         
         fLab = open("DroitLab.txt", "r")
-        #contenu = fLab.read()
+
         for lineD in fLab:
             
             try:
@@ -126,7 +132,7 @@ def main():
                 
                 yy = re.search(r'^'+extension+'-->.+,(.+)', lineD)
                 y = yy.group(1)
-                #print("Image num : "+extension+" x: "+x+ " y: "+y)
+
                 canvas(float(x),float(y),photo,i)
                 
             except:
@@ -212,7 +218,7 @@ def main():
     photo6=PhotoImage(file="images/tc-image005.gif")
     for objet in ListeObjet:
 
-        #photo6=PhotoImage(file=objet.photo)
+        
         valx2=objet.x
         valy=objet.y
         coordValide= False
@@ -274,12 +280,9 @@ def main():
                 condition4=regarderDroit(NumImgHG,"BasGauche")
  
                 if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##                    if i!=0:
-##                        #evite la superposition d objet
-##                        valx2=changeX(xprec,objet.x,len(xprec))
-##
+
                     canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
-##                    xprec.append(float(valx2))
+
                     listeCoordObjValideX.append(int(valx2))
                     listeCoordObjValideY.append(int(valy))
                     coordValide=True
@@ -297,12 +300,9 @@ def main():
 
                 
                 if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-                    #if i!=0:
-##                        #evite la superposition d objet
-##                        valx2=changeX(xprec,objet.x,len(xprec))
-##
+
                     canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
-##                    xprec.append(float(valx2))
+
                     listeCoordObjValideX.append(int(valx2))
                     listeCoordObjValideY.append(int(valy))
                     coordValide=True
@@ -319,12 +319,9 @@ def main():
                 condition4=regarderDroit(NumImgHD,"HautDroit")
 
                 if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##                    if i!=0:
-##                        #evite la superposition d objet
-##                        valx2=changeX(xprec,objet.x,len(xprec))
-##
+
                     canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
-##                    xprec.append(float(valx2))
+
                     listeCoordObjValideX.append(int(valx2))
                     listeCoordObjValideY.append(int(valy))
                     coordValide=True
@@ -335,8 +332,7 @@ def main():
                     valy=random.choice(listeCoordy)
            
             else:
-                #coordValide=True
-                print ("pass")
+                pass
 
 
                                 
@@ -880,10 +876,10 @@ def ramasserObj(x,y):
                                 
                                 if len(nbObjRamasser)==1:
                                     stringVar.set(str(len(nbObjRamasser)) +" objet a été ramassé")
-                                    #LabelObj=Label(FenObjet, text=str(len(nbObjRamasser)) +" Objet a été ramassé").pack()
+                                    
                                 else:
                                     stringVar.set(str(len(nbObjRamasser)) +" objets ont été ramassés")
-                                    #LabelObj.config(text=str(len(nbObjRamasser)) +" Objets ont été ramassés")
+                                    
                         except:
                             nbObjRamasser.append(i)
                             
