@@ -48,31 +48,18 @@ def main():
     RevenuSortiZone=True
     nbObjRamasser=[]
     ListeObjetCanvas=[]
-
-
+    
     ##################################################################################################
-    #Construction de la liste de coordonnées permetant d'optimiser les chances du coordonnées valides
-    listeCoordX=[]
-    listeCoordy=[]
-    nb=23
-    while nb <570:
-        listeCoordX.append(nb)
-        listeCoordy.append(nb)
-        nb=nb+22.5
-    ##################################################################################################
-        
-        
+    #Construction de la fenêtre Tkinter
     fenetre = Tk()
     #Titre de la fenêtre Tkinter
     fenetre.title('Labyrinthe P3')
     #Dimensions de la fenêtre
     fenetre.geometry("{0}x{1}+0+0".format(fenetre.winfo_screenwidth()-15, fenetre.winfo_screenheight()-15))
-    #Chargement de la variable de l image photo
-    photo = PhotoImage(file="images/wall.gif")
-    #ouverture du fichier qui decrit 
-    f = open("Mac.txt", "r")
-   
+    ###################################################################################################
     
+    ##################################################################################################
+    #Construction du menu en haut à gauche de la fenêtre principale
     menubar = Menu(fenetre)
 
     menu1 = Menu(menubar, tearoff=0)
@@ -86,7 +73,30 @@ def main():
     menubar.add_cascade(label="Aide", menu=menu2)
 
     fenetre.config(menu=menubar)
+    ##################################################################################################
+
+
+    ##################################################################################################
+    #Construction de la liste de coordonnées permetant d'optimiser les chances du coordonnées valides
+    #Pour la position des Objets
+    listeCoordX=[]
+    listeCoordy=[]
+    nb=23
+    while nb <570:
+        listeCoordX.append(nb)
+        listeCoordy.append(nb)
+        nb=nb+22.5
+    ##################################################################################################
+        
+
+
     
+    #Chargement de la variable de l image photo
+    photo = PhotoImage(file="images/wall.gif")
+    #ouverture du fichier qui decrit 
+    f = open("Mac.txt", "r")
+   
+
     global Frame1
     Frame1 = Frame(fenetre, borderwidth=2, relief=GROOVE)
     Frame1.config(width=680, height=680)
