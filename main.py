@@ -9,9 +9,36 @@ from PIL import Image, ImageTk
 import datetime
 import random
 
+
 #################################################################################################
 ###############################  Définition des Class  ##########################################
-class Objet:
+class ElementLabyrinthe:
+        id_element=0
+
+        def __init__(self):
+            ElementLabyrinthe.id_element =+1
+                
+class MacGayver(ElementLabyrinthe):
+        positionX=51
+        positionY=46
+        
+        #canvasMacGayver = Canvas(Frame1,width=32, height=43, borderwidth=0,highlightthickness=0)
+        #canvasMacGayver.create_image(0, 0, anchor=NW, image=PhotoImage(file="images/macgyver.gif"))
+        
+        def __init__(self):
+            print("init")
+            #self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
+        def deplacementVersDroite(self):
+            self.positionX=self.positionX+22.5
+        def deplacementVersGauche(self):
+            self.positionX=self.positionX-22.5
+        def deplacementVersBas(self):
+            self.positionX=self.positionY-22.5
+        def deplacementVersHaut(self):
+            self.positionX=self.positionY+22.5
+            
+
+class Objet(ElementLabyrinthe):
         numero_objet=0
         
         def __init__(self):
@@ -31,7 +58,7 @@ class Objet:
             coord= str(x) + "," + str(y)
             return coord
 
-##################################################################################################
+################################################################################################## 
 
 
 
@@ -174,6 +201,7 @@ def main():
     MacX=51
     MacY=46
     i=1
+    Mac=MacGayver()
     
     #################################################
     #Creation de la liste d objets
@@ -912,6 +940,6 @@ def rejouerDebut():
     
     fenetre.destroy()
     main()
-    
+   
 
 main()
