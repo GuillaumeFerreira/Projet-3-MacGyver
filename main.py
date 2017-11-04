@@ -7,7 +7,7 @@ import re
 from PIL import Image, ImageTk
 import random
 from ClassObject import *
-#from Func import *
+from Func import *
 
 
 
@@ -90,7 +90,7 @@ def main():
     #################################################
     #Initialisation et construction de labyrinthe
     photo = PhotoImage(file="images/wall.gif")
-    creationDuLabyrinthe(photo)
+    creationDuLabyrinthe(photo,Frame1)
     #################################################
     #################################################
     #création de MacGayver
@@ -135,107 +135,144 @@ def main():
     fenetre.bind('<Down>', versBas)
 
     fenetre.mainloop()
-              
-def creationDuLabyrinthe(photo):
-    ###############################################################################
-    #Initialisation et construction de labyrinthe  
-    #ouverture du fichier qui decrit 
-    f = open("Mac.txt", "r")
-    i=0
-    for line in f:
-        
-        e = re.search(r'-->(.+)', line)
-        extension = e.group(1)
-        
-        fLab = open("DroitLab.txt", "r")
-
-        for lineD in fLab:
-            
-            try:
-               
-                x = re.search(r'^'+extension+'-->.+Pos:(.+),', lineD)
-               
-                x = x.group(1)
-                
-                yy = re.search(r'^'+extension+'-->.+,(.+)', lineD)
-                y = yy.group(1)
-
-                #canvas(float(x),float(y),photo,i)
-                Mur(float(x),float(y),Frame1,photo,i)
-            except:
-                #rien a faire pas la bonne ligne
-                pass
-            else:
-                #rien a faire pas la bonne ligne
-                pass
-        fLab.close()
-        
-        i=i+1
-    f.close()
-    ################################################################################
     
 def versDroite(evt):
    Mac.deplacementVersDroite()
-   ramasserObjetEtVictoire()
+   if ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="gagner":
+       gagner()
+   elif ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="perdu":
+       perdu()
+   else:
+        pass
 
 def versGauche(evt):
    Mac.deplacementVersGauche()
-   ramasserObjetEtVictoire()
+   
+   if ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="gagner":
+       gagner()
+   elif ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="perdu":
+       perdu()
+   else:
+        pass
    
 def versHaut(evt):
    Mac.deplacementVersHaut()
-   ramasserObjetEtVictoire()
+   if ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="gagner":
+       gagner()
+   elif ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="perdu":
+       perdu()
+   else:
+        pass
    
 def versBas(evt):
    Mac.deplacementVersBas()
-   ramasserObjetEtVictoire()
-
-   
-def ramasserObjetEtVictoire():
-   ramasserLesObjets()
-   nombreObjetRamasser()
-   if Mac.macDansZoneGardien() and Mac.etreResortiDeLaZone:
-        Mac.etreResortiDeLaZone=False
-        Mac.nombreDeFoisDansZone=Mac.nombreDeFoisDansZone+1
-        if Mac.objetRamasser==6:
-            gagner(fenetre)
-        else:
-            if Mac.nombreDeFoisDansZone>=3:
-                perdu(fenetre)
-            elif GardienLab.memoireNbObjet==Mac.objetRamasser and Mac.nombreDeFoisDansZone<3:
-                    #gardien en tres en colere
-                    stringVarGardien.set("Tu te crois malin!\n Tu n'as rien récupéré de plus, va t'en d'ici tout de suite!!!")
-            elif Mac.nombreDeFoisDansZone==2 and GardienLab.memoireNbObjet!=Mac.objetRamasser:
-                stringVarGardien.set("C'est la deuxième fois que tu viens me voir!\n Tu n'as que " + str(Mac.objetRamasser) +" objets!\n Je te déconseille de revenir me voir une troisième fois \n sans tous les objets!")
-            else:
-                    #gardien en colere
-                if Mac.objetRamasser==1:
-                    stringVarGardien.set("Quoi ? Seulement " + str(Mac.objetRamasser) +" objet ramassé!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
-                else:
-                    stringVarGardien.set("Quoi ? Seulement " + str(Mac.objetRamasser) +" objets ramassés!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
-                
-        GardienLab.memoireNbObjet=Mac.objetRamasser
+   if ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="gagner":
+       gagner()
+   elif ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="perdu":
+       perdu()
    else:
-        Mac.etreResortiDeLaZone=True
-        
-def ramasserLesObjets():
-        #On regarde si MacGayver se trouve sur un objet si oui , on le supprime
-        for objet in ListeObjet:
-            if Mac.ramasseObjet(objet.positionX,objet.positionY):
-                objet.objetEstRamasser()
-                ListeObjet.remove(objet)
-
-def nombreObjetRamasser():
-    if Mac.objetRamasser==0:
-        stringVar.set(" - ")
-    elif Mac.objetRamasser==1:
-        stringVar.set(str(Mac.objetRamasser) +" objet ramassé.")
-    else:
-        stringVar.set(str(Mac.objetRamasser) +" objets ramassés.")
-        
-
-
-
+        pass              
+##def creationDuLabyrinthe(photo):
+##    ###############################################################################
+##    #Initialisation et construction de labyrinthe  
+##    #ouverture du fichier qui decrit 
+##    f = open("Mac.txt", "r")
+##    i=0
+##    for line in f:
+##        
+##        e = re.search(r'-->(.+)', line)
+##        extension = e.group(1)
+##        
+##        fLab = open("DroitLab.txt", "r")
+##
+##        for lineD in fLab:
+##            
+##            try:
+##               
+##                x = re.search(r'^'+extension+'-->.+Pos:(.+),', lineD)
+##               
+##                x = x.group(1)
+##                
+##                yy = re.search(r'^'+extension+'-->.+,(.+)', lineD)
+##                y = yy.group(1)
+##
+##                #canvas(float(x),float(y),photo,i)
+##                Mur(float(x),float(y),Frame1,photo,i)
+##            except:
+##                #rien a faire pas la bonne ligne
+##                pass
+##            else:
+##                #rien a faire pas la bonne ligne
+##                pass
+##        fLab.close()
+##        
+##        i=i+1
+##    f.close()
+##    ################################################################################
+##    
+##def versDroite(evt):
+##   Mac.deplacementVersDroite()
+##   ramasserObjetEtVictoire()
+##
+##def versGauche(evt):
+##   Mac.deplacementVersGauche()
+##   ramasserObjetEtVictoire()
+##   
+##def versHaut(evt):
+##   Mac.deplacementVersHaut()
+##   ramasserObjetEtVictoire()
+##   
+##def versBas(evt):
+##   Mac.deplacementVersBas()
+##   ramasserObjetEtVictoire()
+##
+##   
+##def ramasserObjetEtVictoire():
+##   ramasserLesObjets()
+##   nombreObjetRamasser()
+##   if Mac.macDansZoneGardien() and Mac.etreResortiDeLaZone:
+##        Mac.etreResortiDeLaZone=False
+##        Mac.nombreDeFoisDansZone=Mac.nombreDeFoisDansZone+1
+##        if Mac.objetRamasser==6:
+##            gagner(fenetre)
+##        else:
+##            if Mac.nombreDeFoisDansZone>=3:
+##                perdu(fenetre)
+##            elif GardienLab.memoireNbObjet==Mac.objetRamasser and Mac.nombreDeFoisDansZone<3:
+##                    #gardien en tres en colere
+##                    stringVarGardien.set("Tu te crois malin!\n Tu n'as rien récupéré de plus, va t'en d'ici tout de suite!!!")
+##            elif Mac.nombreDeFoisDansZone==2 and GardienLab.memoireNbObjet!=Mac.objetRamasser:
+##                stringVarGardien.set("C'est la deuxième fois que tu viens me voir!\n Tu n'as que " + str(Mac.objetRamasser) +" objets!\n Je te déconseille de revenir me voir une troisième fois \n sans tous les objets!")
+##            else:
+##                    #gardien en colere
+##                if Mac.objetRamasser==1:
+##                    stringVarGardien.set("Quoi ? Seulement " + str(Mac.objetRamasser) +" objet ramassé!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
+##                else:
+##                    stringVarGardien.set("Quoi ? Seulement " + str(Mac.objetRamasser) +" objets ramassés!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
+##                
+##        GardienLab.memoireNbObjet=Mac.objetRamasser
+##   else:
+##        Mac.etreResortiDeLaZone=True
+##        
+##def ramasserLesObjets():
+##        #On regarde si MacGayver se trouve sur un objet si oui , on le supprime
+##        for objet in ListeObjet:
+##            if Mac.ramasseObjet(objet.positionX,objet.positionY):
+##                objet.objetEstRamasser()
+##                ListeObjet.remove(objet)
+##
+##def nombreObjetRamasser():
+##    if Mac.objetRamasser==0:
+##        stringVar.set(" - ")
+##    elif Mac.objetRamasser==1:
+##        stringVar.set(str(Mac.objetRamasser) +" objet ramassé.")
+##    else:
+##        stringVar.set(str(Mac.objetRamasser) +" objets ramassés.")
+##        
+##
+##
+##
+   
 def perdu():
         global fenetrePerdu
         fenetrePerdu = Tk()

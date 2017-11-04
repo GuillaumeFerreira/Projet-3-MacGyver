@@ -10,40 +10,135 @@ import random
 from ClassObject import *
 
 
-    
-	
-
-    
-
-
-
-def perdu():
-        global fenetrePerdu
-        fenetrePerdu = Tk()
-        fenetrePerdu.title('Game Over')
-        fenetrePerdu.configure(width=400,height=250)
-        w = Label(fenetrePerdu, text="Gardien : Je t'avais prévenu ! Bye bye mon ami!\n \n Tu as perdu, mais ne te décourage pas, recommence.")
-        w.place(x=50, y=40)
-        fenetre.unbind('<Right>') 
-        fenetre.unbind('<Left>')
-        fenetre.unbind('<Up>')
-        fenetre.unbind('<Down>')
-        Button(fenetrePerdu,text='Quitter', command=quit).place(x=90, y=180)
-        Button(fenetrePerdu,text='Rejouer' , command=rejouerLoose).place(x=230, y=180)
-
-def gagner():
+def creationDuLabyrinthe(photo,Frame1):
+    ###############################################################################
+    #Initialisation et construction de labyrinthe  
+    #ouverture du fichier qui decrit 
+    f = open("Mac.txt", "r")
+    i=0
+    for line in f:
         
-        fenetreGagner = Tk()
-        fenetreGagner.title('Victoire')
-        fenetreGagner.configure(width=400,height=150)
-        w = Label(fenetreGagner, text="Bravo, le gardien t'a finalement laissé passer, tu es libre!")
-        w.place(x=50, y=40)
-        fenetre.unbind('<Right>') 
-        fenetre.unbind('<Left>')
-        fenetre.unbind('<Up>')
-        fenetre.unbind('<Down>')
-        Button(fenetreGagner,text='Quitter', command=quit).place(x=120, y=80)
-        Button(fenetreGagner,text='Rejouer' , command=rejouer).place(x=250, y=80)
+        e = re.search(r'-->(.+)', line)
+        extension = e.group(1)
+        
+        fLab = open("DroitLab.txt", "r")
+
+        for lineD in fLab:
+            
+            try:
+               
+                x = re.search(r'^'+extension+'-->.+Pos:(.+),', lineD)
+               
+                x = x.group(1)
+                
+                yy = re.search(r'^'+extension+'-->.+,(.+)', lineD)
+                y = yy.group(1)
+
+                #canvas(float(x),float(y),photo,i)
+                Mur(float(x),float(y),Frame1,photo,i)
+            except:
+                #rien a faire pas la bonne ligne
+                pass
+            else:
+                #rien a faire pas la bonne ligne
+                pass
+        fLab.close()
+        
+        i=i+1
+    f.close()
+    ################################################################################
+    
+
+
+   
+def ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre):
+   ramasserLesObjets(ListeObjet,Mac)
+   nombreObjetRamasser(Mac,stringVar)
+   print (str(Mac.nombreDeFoisDansZone))
+   if Mac.macDansZoneGardien() and Mac.etreResortiDeLaZone:
+        Mac.etreResortiDeLaZone=False
+        Mac.nombreDeFoisDansZone=Mac.nombreDeFoisDansZone+1
+        if Mac.objetRamasser==6:
+            return ("gagner")
+            #gagner(fenetre)
+			
+        else:
+            if Mac.nombreDeFoisDansZone>=3:
+                #perdu(fenetre)
+                return ("perdu")
+            elif GardienLab.memoireNbObjet==Mac.objetRamasser and Mac.nombreDeFoisDansZone<3:
+                    #gardien en tres en colere
+                    stringVarGardien.set("Tu te crois malin!\n Tu n'as rien récupéré de plus, va t'en d'ici tout de suite!!!")
+            elif Mac.nombreDeFoisDansZone==2 and GardienLab.memoireNbObjet!=Mac.objetRamasser:
+                stringVarGardien.set("C'est la deuxième fois que tu viens me voir!\n Tu n'as que " + str(Mac.objetRamasser) +" objets!\n Je te déconseille de revenir me voir une troisième fois \n sans tous les objets!")
+            else:
+                    #gardien en colere
+                if Mac.objetRamasser==1:
+                    stringVarGardien.set("Quoi ? Seulement " + str(Mac.objetRamasser) +" objet ramassé!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
+                else:
+                    stringVarGardien.set("Quoi ? Seulement " + str(Mac.objetRamasser) +" objets ramassés!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
+                
+        GardienLab.memoireNbObjet=Mac.objetRamasser
+   else:
+        if Mac.macDansZoneGardien()!=True:
+            Mac.etreResortiDeLaZone=True
+        
+def ramasserLesObjets(ListeObjet,Mac):
+        #On regarde si MacGayver se trouve sur un objet si oui , on le supprime
+        for objet in ListeObjet:
+            if Mac.ramasseObjet(objet.positionX,objet.positionY):
+                objet.objetEstRamasser()
+                ListeObjet.remove(objet)
+
+def nombreObjetRamasser(Mac,stringVar):
+    if Mac.objetRamasser==0:
+        stringVar.set(" - ")
+    elif Mac.objetRamasser==1:
+        stringVar.set(str(Mac.objetRamasser) +" objet ramassé.")
+    else:
+        stringVar.set(str(Mac.objetRamasser) +" objets ramassés.")
         
 
+
+
+# def perdu(fenetre):
+        # global fenetrePerdu
+        # fenetrePerdu = Tk()
+        # fenetrePerdu.title('Game Over')
+        # fenetrePerdu.configure(width=400,height=250)
+        # w = Label(fenetrePerdu, text="Gardien : Je t'avais prévenu ! Bye bye mon ami!\n \n Tu as perdu, mais ne te décourage pas, recommence.")
+        # w.place(x=50, y=40)
+        # fenetre.unbind('<Right>') 
+        # fenetre.unbind('<Left>')
+        # fenetre.unbind('<Up>')
+        # fenetre.unbind('<Down>')
+        # Button(fenetrePerdu,text='Quitter', command=quit).place(x=90, y=180)
+        # Button(fenetrePerdu,text='Rejouer' , command=rejouerLoose(fenetre)).place(x=230, y=180)
+
+# def gagner(fenetre):
+        # global fenetreGagner
+        # fenetreGagner = Tk()
+        # fenetreGagner.title('Victoire')
+        # fenetreGagner.configure(width=400,height=150)
+        # w = Label(fenetreGagner, text="Bravo, le gardien t'a finalement laissé passer, tu es libre!")
+        # w.place(x=50, y=40)
+        # fenetre.unbind('<Right>') 
+        # fenetre.unbind('<Left>')
+        # fenetre.unbind('<Up>')
+        # fenetre.unbind('<Down>')
+        # Button(fenetreGagner,text='Quitter', command=quit).place(x=120, y=80)
+        # Button(fenetreGagner,text='Rejouer' , command=rejouer).place(x=250, y=80)
+        
+# def rejouer():
+    # fenetreGagner.destroy()
+    # fenetre.destroy()
+    # main()
+# def rejouerLoose(fenetre):
+    # fenetrePerdu.destroy()
+    # fenetre.destroy()
+    # main()
+# def rejouerDebut():
+    
+    # fenetre.destroy()
+    # main()
 
