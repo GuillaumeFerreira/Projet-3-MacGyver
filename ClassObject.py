@@ -259,9 +259,9 @@ class Mur(ElementLabyrinthe):
             self.positionX =(id_mur%15)*45
             self.positionY=(int(id_mur/15))*45
             
-            canvas = Canvas(FrameLabyrinthe,width=45, height=45, borderwidth=0, highlightthickness=0)
-            canvas.create_image(borderwidth+(decalageImgX), borderheight+(decalageImgY), anchor=NW, image=photo)
-            canvas.place(x=self.positionX, y=self.positionY)
+            self.canvas = Canvas(FrameLabyrinthe,width=45, height=45, borderwidth=0, highlightthickness=0)
+            self.canvas.create_image(borderwidth+(decalageImgX), borderheight+(decalageImgY), anchor=NW, image=photo)
+            self.canvas.place(x=self.positionX, y=self.positionY)
                 
 class Gardien(ElementLabyrinthe):
 

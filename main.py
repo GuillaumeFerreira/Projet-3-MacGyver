@@ -8,7 +8,9 @@ from PIL import Image, ImageTk
 import random
 from ClassObject import *
 #from Func import *
-     
+
+
+
 def main():
     
     global fenetre
