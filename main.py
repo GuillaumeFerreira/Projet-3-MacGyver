@@ -7,7 +7,7 @@ import re
 from PIL import Image, ImageTk
 import random
 from ClassObject import *
-
+#from Func import *
      
 def main():
     
@@ -196,10 +196,10 @@ def ramasserObjetEtVictoire():
         Mac.etreResortiDeLaZone=False
         Mac.nombreDeFoisDansZone=Mac.nombreDeFoisDansZone+1
         if Mac.objetRamasser==6:
-            gagner()
+            gagner(fenetre)
         else:
             if Mac.nombreDeFoisDansZone>=3:
-                perdu()
+                perdu(fenetre)
             elif GardienLab.memoireNbObjet==Mac.objetRamasser and Mac.nombreDeFoisDansZone<3:
                     #gardien en tres en colere
                     stringVarGardien.set("Tu te crois malin!\n Tu n'as rien récupéré de plus, va t'en d'ici tout de suite!!!")
