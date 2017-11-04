@@ -161,8 +161,7 @@ class ElementLabyrinthe:
 class MacGayver(ElementLabyrinthe):
        
         def __init__(self,FrameLabyrinthe,photo):    
-            #Initialisation de l'image de MacGayver dans le labyrinthe
-                
+            #Initialisation de l'image de MacGayver dans le labyrinthe  
             #Position initiale de MacGayver.
             #Position en abscisse par rapport au coin en haut à gauche.
             self.positionX=51
@@ -172,7 +171,7 @@ class MacGayver(ElementLabyrinthe):
             self.canvasMacGayver.create_image(0, 0, anchor=NW, image=photo)
             self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
 
-
+            self.objetRamasser=0
             
             #retourne True ou false pour savoir si MacGayver est dans la zone
         
@@ -214,7 +213,16 @@ class MacGayver(ElementLabyrinthe):
                 self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
             else:
                 self.positionY=self.positionY+22.5
+                
+        def rammasseObjet(self,xDeObjet,yDeObjet):
             
+            if (int(self.positionX)>= int(xDeObjet) and int(self.positionX) < int(xDeObjet+39)) or (int(self.positionX+32)>= int(xDeObjet) and int(self.positionX+32) < int(xDeObjet+39)):
+                if (int(self.positionY) >= int(yDeObjet-10) and int(self.positionY) < int(yDeObjet+43)) or (int(self.positionY+43) > int(yDeObjet) and int(self.positionY+43) < int(yDeObjet+40)) :
+                    return True
+                else:
+                    return False
+            else:
+                return False 
             
 
 
@@ -246,7 +254,7 @@ class Objet(ElementLabyrinthe):
 
 
 ################################################################################################## 
-
+##################################################################################################
 
 
 
@@ -381,19 +389,12 @@ def main():
         i=i+1
     f.close()
     ################################################################################
-
-
-
-    
-
-        
-    MacX=51
-    MacY=46
-    i=1
+    #################################################
+    #création de MacGayver
     photoMacGayver=PhotoImage(file="images/macgyver.gif")
     global Mac
     Mac=MacGayver(Frame1,photoMacGayver)
-    
+    #################################################
     #################################################
     #Creation de la liste d objets
     photoObjet=PhotoImage(file="images/tc-image005.gif")
@@ -401,9 +402,7 @@ def main():
     for i in range(6):
         newObjet=Objet(listeCoord,Frame1,photoObjet,i)
         ListeObjet.append(newObjet)
-    #################################################
-
-        
+    #################################################  
     #################################################
     #Creation du gardien   
     photo3 = PhotoImage(file="images/gardien.gif")
@@ -423,164 +422,13 @@ def main():
     canvas15.place(x=592, y=610)
 
 
-    ######################################
-    #evite la superposition d objet
-    #fonction recursive
-    def changeX(xprec,valx,i):
-        
-        for j in range(0,i):
-            if (valx<(xprec[j]+43)) and (valx>(xprec[j]-43)):
-                valx=random.uniform(22.5, 570.0)
-               
-                changeX(xprec,valx,i)
-            
-                
-        return float(valx)
-    ####################################################
-
-
-
-    #Ajout des objets
-##    listeImgDecObj=[]
-##    listeImgDecObj.append(-197)
-##    listeImgDecObj.append(-158)
-##    listeImgDecObj.append(-4)
-##    listeImgDecObj.append(-120)
-##    listeImgDecObj.append(-81)
-##    listeImgDecObj.append(-42)
     i=0
     xprec=[]
     global listeCoordObjValideX
     global listeCoordObjValideY
     listeCoordObjValideX=[]
     listeCoordObjValideY=[]
-##    photo6=PhotoImage(file="images/tc-image005.gif")
-##    for objet in ListeObjet:
-##
-##        
-##        valx2=objet.x
-##        valy=objet.y
-##        coordValide= False
-##        while coordValide == False:
-##            if int(valx2/45)<valx2/45:
-##                Pos=int(valx2/45)+1
-##            else:
-##                Pos=int(valx2/45)
-##                
-##            if int((valx2+39)/45)<(valx2+39)/45:
-##                PosD=int((valx2+39)/45)+1
-##            else:
-##                PosD=int((valx2+39)/45)
-##                
-##            if int(valy/45)<valy/45:
-##                PosH=int((valy)/45)+1
-##            else:
-##                PosH=int((valy)/45)
-##                
-##            if int((valy+43)/45)<(valy+43)/45:
-##                PosB=int((valy+43)/45)+1
-##            else:
-##                PosB=int((valy+43)/45)
-##
-##            condition1="False"
-##            condition2="False"
-##            condition3="False"
-##            condition4="False"
-##            NumImgBD=(PosB*15)+PosD-15
-##            NumImgBG=(PosB*15)+Pos-15
-##            NumImgHD=(PosH*15)+PosD-15
-##            NumImgHG=(PosH*15)+Pos-15
-##
-##
-##            if NumImgBD!=NumImgHD and NumImgBD!=NumImgBG:
-##                
-##                condition1=regarderDroit(NumImgBD,"HautGauche")
-##                condition2=regarderDroit(NumImgHD,"BasGauche")
-##                condition3=regarderDroit(NumImgBG,"HautDroit")
-##                condition4=regarderDroit(NumImgHG,"BasDroit")
-##
-##                if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##
-##                    canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
-##
-##                    listeCoordObjValideX.append(int(valx2))
-##                    listeCoordObjValideY.append(int(valy))
-##                    coordValide=True
-##                    i=i+1
-##                else:
-##                   
-##                    valx2=random.choice(listeCoordX)
-##                    valy=random.choice(listeCoordy)
-##                    
-##            elif NumImgBD!=NumImgHD and NumImgBD==NumImgBG:
-##                condition1=regarderDroit(NumImgBD,"HautDroit")
-##                condition2=regarderDroit(NumImgBG,"HautGauche")
-##                condition3=regarderDroit(NumImgHD,"BasDroit")
-##                condition4=regarderDroit(NumImgHG,"BasGauche")
-## 
-##                if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##
-##                    canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
-##
-##                    listeCoordObjValideX.append(int(valx2))
-##                    listeCoordObjValideY.append(int(valy))
-##                    coordValide=True
-##                    i=i+1
-##                else:
-##                   
-##                    valx2=random.choice(listeCoordX)
-##                    valy=random.choice(listeCoordy)
-##            elif NumImgBD==NumImgHD and NumImgBD!=NumImgBG:
-##                condition1=regarderDroit(NumImgBD,"BasGauche")
-##                condition2=regarderDroit(NumImgHD,"HautGauche")
-##                condition3=regarderDroit(NumImgBG,"BasDroit")
-##                condition4=regarderDroit(NumImgHG,"HautDroit")
-##
-##
-##                
-##                if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##
-##                    canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
-##
-##                    listeCoordObjValideX.append(int(valx2))
-##                    listeCoordObjValideY.append(int(valy))
-##                    coordValide=True
-##                    i=i+1
-##                else:
-##
-##                    valx2=random.choice(listeCoordX)
-##                    valy=random.choice(listeCoordy)
-##                    
-##            elif NumImgBD==NumImgHD and NumImgBG==NumImgBD:
-##                condition1=regarderDroit(NumImgBG,"BasGauche")
-##                condition2=regarderDroit(NumImgHG,"HautGauche")
-##                condition3=regarderDroit(NumImgBD,"BasDroit")
-##                condition4=regarderDroit(NumImgHD,"HautDroit")
-##
-##                if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##
-##                    canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
-##
-##                    listeCoordObjValideX.append(int(valx2))
-##                    listeCoordObjValideY.append(int(valy))
-##                    coordValide=True
-##                    i=i+1
-##                else:
-##                    
-##                    valx2=random.choice(listeCoordX)
-##                    valy=random.choice(listeCoordy)
-##           
-##            else:
-##                pass
 
-
-                                
-##    photo2 = PhotoImage(file="images/macgyver.gif")
-##    global canvas13
-##    canvas13 = Canvas(Frame1,width=32, height=43, borderwidth=0,highlightthickness=0)
-##    canvas13.create_image(0, 0, anchor=NW, image=photo2)
-##    canvas13.place(x=MacX, y=MacY)
-    
 
     #Si pression sur la touche directionnelle fleche droite du clavier déclenche fonction versDroite
     fenetre.bind('<Right>',versDroite)
@@ -593,35 +441,36 @@ def main():
 
     
     fenetre.mainloop()
-    
+def rammasserLesObjets():
+        #On regarde si MacGayver se trouve sur un objet si oui , on le supprime
+        for objet in ListeObjet:
+            if Mac.rammasseObjet(objet.positionX,objet.positionY):
+                objet.objetEstRammasser()
+                Mac.objetRamasser=+1
+                
 def versDroite(evt):
    Mac.deplacementVersDroite()
+   rammasserLesObjets()            
    if Mac.macDansZoneGardien():
         gagner(Mac.positionX,Mac.positionY)
    
 def versGauche(evt):
    Mac.deplacementVersGauche()
+   rammasserLesObjets()
    if Mac.macDansZoneGardien():
         gagner(Mac.positionX,Mac.positionY)   
 def versHaut(evt):
    Mac.deplacementVersHaut()
+   rammasserLesObjets()
    if Mac.macDansZoneGardien():
         gagner(Mac.positionX,Mac.positionY)   
 def versBas(evt):
    Mac.deplacementVersBas()
+   rammasserLesObjets()
    if Mac.macDansZoneGardien():
         gagner(Mac.positionX,Mac.positionY)    
   
-##def canvasObj(x,y,photo,decalage):
-##    
-##    
-##    
-##    canvas16 = Canvas(Frame1,width=39, height=43, borderwidth=0,highlightthickness=0)
-##    canvas16.create_image(decalage, -1, anchor=NW, image=photo)
-##    canvas16.place(x=x, y=y)
-##    ListeObjetCanvas.append(canvas16)
-##  
-##    return canvas16
+
 
 def canvas(x,y,photo,i):
     borderwidth=-4
@@ -635,412 +484,7 @@ def canvas(x,y,photo,i):
     canvas.create_image(borderwidth+(x), borderheight+(y), anchor=NW, image=photo)
     canvas.place(x=placeX, y=placeY)
     return canvas
-##def toucheeventR(evt):
-##    global MacX
-##    global MacY
-##    MacX=MacX+22.5
-##    global NumImg
-##    
-##    if int(MacX/45)<MacX/45:
-##        PosG=int(MacX/45)+1
-##    else:
-##        PosG=int(MacX/45)
-##        
-##    MacXdroite=MacX+32   
-##    if int(MacXdroite/45)<MacXdroite/45:
-##        PosD=int(MacXdroite/45)+1
-##    else:
-##        PosD=int(MacXdroite/45)
-##      
-##
-##        
-##    if int(MacY/45)<MacY/45:
-##        PosYhaut=int(MacY/45)+1
-##    else:
-##        PosYhaut=int(MacY/45)
-##    MacYdbas=MacY+43  
-##    if int(MacYdbas/45)<MacYdbas/45:
-##        PosYbas=int(MacYdbas/45)+1
-##    else:
-##        PosYbas=int(MacYdbas/45)
-##
-##    condition1="False"
-##    condition2="False"
-##    condition3="False"
-##    condition4="False"
-##    NumImgBD=(PosYbas*15)+PosD-15
-##    NumImgBG=(PosYbas*15)+PosG-15
-##    NumImgHD=(PosYhaut*15)+PosD-15
-##    NumImgHG=(PosYhaut*15)+PosG-15
-##
-##
-##    if NumImgBD!=NumImgHD and NumImgBD!=NumImgBG:
-##        condition1=regarderDroit(NumImgBD,"HautGauche")
-##        condition2=regarderDroit(NumImgHD,"BasGauche")
-##        condition3=regarderDroit(NumImgBG,"HautDroit")
-##        condition4=regarderDroit(NumImgHG,"BasDroit")
-##
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacX=MacX-22.5
-##    elif NumImgBD!=NumImgHD and NumImgBD==NumImgBG:
-##        condition1=regarderDroit(NumImgBD,"HautDroit")
-##        condition2=regarderDroit(NumImgBG,"HautGauche")
-##        condition3=regarderDroit(NumImgHD,"BasDroit")
-##        condition4=regarderDroit(NumImgHG,"BasGauche")
-##
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacX=MacX-22.5
-##    elif NumImgBD==NumImgHD and NumImgBD!=NumImgBG:
-##        condition1=regarderDroit(NumImgBD,"BasGauche")
-##        condition2=regarderDroit(NumImgHD,"HautGauche")
-##        condition3=regarderDroit(NumImgBG,"BasDroit")
-##        condition4=regarderDroit(NumImgHG,"HautDroit")
-##
-##
-##        
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacX=MacX-22.5
-##            
-##    elif NumImgBD==NumImgHD and NumImgBD==NumImgBG:
-##        condition1=regarderDroit(NumImgBG,"BasGauche")
-##        condition2=regarderDroit(NumImgHG,"HautGauche")
-##        condition3=regarderDroit(NumImgBD,"BasDroit")
-##        condition4=regarderDroit(NumImgHD,"HautDroit")
-##
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacX=MacX-22.5
-##    else:
-##        pass
-##    ramasserObj(MacX,MacY)
-##    gagner(MacX,MacY)
-##    
-##    
-##
-##def regarderDroit(NumImg,positionAregarder):            
-##    f = open("Mac.txt", "r")
-##    global droit
-##    
-##    for line in f:
-##        global extension
-##        try:
-##            e = re.search(r'^'+str(NumImg)+'-->(.+)', line)
-##            
-##            extension = e.group(1)
-##            
-##        except:
-##            #rien a faire pas la bonne ligne
-##            pass
-##        else:
-##            #rien a faire pas la bonne ligne
-##            pass
-##     
-##    fLab = open("DroitLab.txt", "r")
-##        
-##    for lineD in fLab:
-##        
-##        try:
-##            x = re.search(r'^'+extension+'-->.+HG=(.+),HD=(.+),BG=(.+),BD=(.+)/', lineD)
-##              
-##            
-##            if positionAregarder=="HautGauche":
-##                droit=x.group(1)
-##            elif positionAregarder=="HautDroit":
-##                droit=x.group(2)
-##            elif positionAregarder=="BasGauche":
-##                droit=x.group(3)
-##            elif positionAregarder=="BasDroit":
-##                droit=x.group(4)
-##            else:
-##                pass
-##            
-##        except:
-##            #rien a faire pas la bonne ligne
-##            pass
-##        else:
-##            #rien a faire pas la bonne ligne
-##            pass
-##
-##    return (droit)
-##                      
-##def toucheeventL(evt):
-##    global MacY
-##    global MacX
-##    MacX=MacX-22.5
-##    
-##
-##    if int(MacX/45)<MacX/45:
-##        PosG=int(MacX/45)+1
-##    else:
-##        PosG=int(MacX/45)
-##        
-##    MacXdroite=MacX+32   
-##    if int(MacXdroite/45)<MacXdroite/45:
-##        PosD=int(MacXdroite/45)+1
-##    else:
-##        PosD=int(MacXdroite/45)
-##
-##        
-##    if int(MacY/45)<MacY/45:
-##        PosYhaut=int(MacY/45)+1
-##    else:
-##        PosYhaut=int(MacY/45)
-##    MacYdbas=MacY+43  
-##    if int(MacYdbas/45)<MacYdbas/45:
-##        PosYbas=int(MacYdbas/45)+1
-##    else:
-##        PosYbas=int(MacYdbas/45)
-##    condition1="False"
-##    condition2="False"
-##    condition3="False"
-##    condition4="False"
-##    NumImgBD=(PosYbas*15)+PosD-15
-##    NumImgBG=(PosYbas*15)+PosG-15
-##    NumImgHD=(PosYhaut*15)+PosD-15
-##    NumImgHG=(PosYhaut*15)+PosG-15
-##
-##
-##    if NumImgBD!=NumImgHD and NumImgBD!=NumImgBG:
-##        condition1=regarderDroit(NumImgBD,"HautGauche")
-##        condition2=regarderDroit(NumImgHD,"BasGauche")
-##        condition3=regarderDroit(NumImgBG,"HautDroit")
-##        condition4=regarderDroit(NumImgHG,"BasDroit")
-##
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacX=MacX+22.5
-##    elif NumImgBD!=NumImgHD and NumImgBD==NumImgBG:
-##        condition1=regarderDroit(NumImgBD,"HautDroit")
-##        condition2=regarderDroit(NumImgBG,"HautGauche")
-##        condition3=regarderDroit(NumImgHD,"BasDroit")
-##        condition4=regarderDroit(NumImgHG,"BasGauche")
-##
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacX=MacX+22.5
-##    elif NumImgBD==NumImgHD and NumImgBD!=NumImgBG:
-##        condition1=regarderDroit(NumImgBD,"BasGauche")
-##        condition2=regarderDroit(NumImgHD,"HautGauche")
-##        condition3=regarderDroit(NumImgBG,"BasDroit")
-##        condition4=regarderDroit(NumImgHG,"HautDroit")
-##
-##
-##        
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacX=MacX+22.5
-##            
-##    elif NumImgBD==NumImgHD and NumImgBD==NumImgBD:
-##        condition1=regarderDroit(NumImgBG,"BasGauche")
-##        condition2=regarderDroit(NumImgHG,"HautGauche")
-##        condition3=regarderDroit(NumImgBD,"BasDroit")
-##        condition4=regarderDroit(NumImgHD,"HautDroit")
-##
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacX=MacX+22.5
-##    else:
-##        pass
-##    ramasserObj(MacX,MacY)
-##    gagner(MacX,MacY)
-##
-##
-##def toucheeventU(evt):
-##    global MacX
-##    global MacY
-##    MacY=MacY-22.5
-##    
-##    if int(MacX/45)<MacX/45:
-##        PosG=int(MacX/45)+1
-##    else:
-##        PosG=int(MacX/45)
-##        
-##    MacXdroite=MacX+32   
-##    if int(MacXdroite/45)<MacXdroite/45:
-##        PosD=int(MacXdroite/45)+1
-##    else:
-##        PosD=int(MacXdroite/45)
-##
-##        
-##    if int(MacY/45)<MacY/45:
-##        PosYhaut=int(MacY/45)+1
-##    else:
-##        PosYhaut=int(MacY/45)
-##    MacYdbas=MacY+43  
-##    if int(MacYdbas/45)<MacYdbas/45:
-##        PosYbas=int(MacYdbas/45)+1
-##    else:
-##        PosYbas=int(MacYdbas/45)
-##    
-##    condition1="False"
-##    condition2="False"
-##    condition3="False"
-##    condition4="False"
-##    NumImgBD=(PosYbas*15)+PosD-15
-##    NumImgBG=(PosYbas*15)+PosG-15
-##    NumImgHD=(PosYhaut*15)+PosD-15
-##    NumImgHG=(PosYhaut*15)+PosG-15
-##
-##
-##    if NumImgBD!=NumImgHD and NumImgBD!=NumImgBG:
-##        condition1=regarderDroit(NumImgBD,"HautGauche")
-##        condition2=regarderDroit(NumImgHD,"BasGauche")
-##        condition3=regarderDroit(NumImgBG,"HautDroit")
-##        condition4=regarderDroit(NumImgHG,"BasDroit")
-##
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacY=MacY+22.5
-##    elif NumImgBD!=NumImgHD and NumImgBD==NumImgBG:
-##        condition1=regarderDroit(NumImgBD,"HautDroit")
-##        condition2=regarderDroit(NumImgBG,"HautGauche")
-##        condition3=regarderDroit(NumImgHD,"BasDroit")
-##        condition4=regarderDroit(NumImgHG,"BasGauche")
-##
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacY=MacY+22.5
-##    elif NumImgBD==NumImgHD and NumImgBD!=NumImgBG:
-##        condition1=regarderDroit(NumImgBD,"BasGauche")
-##        condition2=regarderDroit(NumImgHD,"HautGauche")
-##        condition3=regarderDroit(NumImgBG,"BasDroit")
-##        condition4=regarderDroit(NumImgHG,"HautDroit")
-##
-##
-##        
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacY=MacY+22.5
-##            
-##    elif NumImgBD==NumImgHD and NumImgBD==NumImgBD:
-##        condition1=regarderDroit(NumImgBG,"BasGauche")
-##        condition2=regarderDroit(NumImgHG,"HautGauche")
-##        condition3=regarderDroit(NumImgBD,"BasDroit")
-##        condition4=regarderDroit(NumImgHD,"HautDroit")
-##
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacY=MacY+22.5
-##    else:
-##        pass
-##    ramasserObj(MacX,MacY)
-##    gagner(MacX,MacY)
-##    
-##def toucheeventD(evt):
-##    global MacX
-##    global MacY
-##    MacY=MacY+22.5
-##    
-##    if int(MacX/45)<MacX/45:
-##        PosG=int(MacX/45)+1
-##    else:
-##        PosG=int(MacX/45)
-##        
-##    MacXdroite=MacX+32   
-##    if int(MacXdroite/45)<MacXdroite/45:
-##        PosD=int(MacXdroite/45)+1
-##    else:
-##        PosD=int(MacXdroite/45)
-##
-##        
-##    if int(MacY/45)<MacY/45:
-##        PosYhaut=int(MacY/45)+1
-##    else:
-##        PosYhaut=int(MacY/45)
-##    MacYdbas=MacY+43  
-##    if int(MacYdbas/45)<MacYdbas/45:
-##        PosYbas=int(MacYdbas/45)+1
-##    else:
-##        PosYbas=int(MacYdbas/45)
-##    
-##    condition1="False"
-##    condition2="False"
-##    condition3="False"
-##    condition4="False"
-##    NumImgBD=(PosYbas*15)+PosD-15
-##    NumImgBG=(PosYbas*15)+PosG-15
-##    NumImgHD=(PosYhaut*15)+PosD-15
-##    NumImgHG=(PosYhaut*15)+PosG-15
-##
-##
-##    if NumImgBD!=NumImgHD and NumImgBD!=NumImgBG:
-##        condition1=regarderDroit(NumImgBD,"HautGauche")
-##        condition2=regarderDroit(NumImgHD,"BasGauche")
-##        condition3=regarderDroit(NumImgBG,"HautDroit")
-##        condition4=regarderDroit(NumImgHG,"BasDroit")
-##
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacY=MacY-22.5
-##    elif NumImgBD!=NumImgHD and NumImgBD==NumImgBG:
-##        condition1=regarderDroit(NumImgBD,"HautDroit")
-##        condition2=regarderDroit(NumImgBG,"HautGauche")
-##        condition3=regarderDroit(NumImgHD,"BasDroit")
-##        condition4=regarderDroit(NumImgHG,"BasGauche")
-##
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacY=MacY-22.5
-##    elif NumImgBD==NumImgHD and NumImgBD!=NumImgBG:
-##        condition1=regarderDroit(NumImgBD,"BasGauche")
-##        condition2=regarderDroit(NumImgHD,"HautGauche")
-##        condition3=regarderDroit(NumImgBG,"BasDroit")
-##        condition4=regarderDroit(NumImgHG,"HautDroit")
-##
-##        
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacY=MacY-22.5
-##            
-##    elif NumImgBD==NumImgHD and NumImgBD==NumImgBD:
-##        condition1=regarderDroit(NumImgBG,"BasGauche")
-##        condition2=regarderDroit(NumImgHG,"HautGauche")
-##        condition3=regarderDroit(NumImgBD,"BasDroit")
-##        condition4=regarderDroit(NumImgHD,"HautDroit")
-##
-##        if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-##            canvas13.place(x=MacX, y=MacY)
-##        else:
-##            print ("impossible de se deplacer")
-##            MacY=MacY-22.5
-##    else:
-##        pass
-##    
-##    ramasserObj(MacX,MacY)
-##    gagner(MacX,MacY)
+
 
     
 RevenuSortiZone=True
