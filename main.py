@@ -214,7 +214,7 @@ class MacGayver(ElementLabyrinthe):
             else:
                 self.positionY=self.positionY+22.5
                 
-        def rammasseObjet(self,xDeObjet,yDeObjet):
+        def ramasseObjet(self,xDeObjet,yDeObjet):
             
             if (int(self.positionX)>= int(xDeObjet) and int(self.positionX) < int(xDeObjet+39)) or (int(self.positionX+32)>= int(xDeObjet) and int(self.positionX+32) < int(xDeObjet+39)):
                 if (int(self.positionY) >= int(yDeObjet-10) and int(self.positionY) < int(yDeObjet+43)) or (int(self.positionY+43) > int(yDeObjet) and int(self.positionY+43) < int(yDeObjet+40)) :
@@ -250,10 +250,20 @@ class Objet(ElementLabyrinthe):
                         self.positionX=random.choice(listeCoord)
                         self.positionY=random.choice(listeCoord)
                         
-        def objetEstRammasser(self):
+        def objetEstRamasser(self):
                 self.canvasObjet.destroy()
                 
-
+class Mur(ElementLabyrinthe):
+        def __init__(self,decalageImgX,decalageImgY,FrameLabyrinthe,photo,id_mur):
+            borderwidth=-4
+            borderheight=-5
+            self.positionX =(id_mur%15)*45
+            self.positionY=(int(id_mur/15))*45
+            
+            canvas = Canvas(Frame1,width=45, height=45, borderwidth=0, highlightthickness=0)
+            canvas.create_image(borderwidth+(decalageImgX), borderheight+(decalageImgY), anchor=NW, image=photo)
+            canvas.place(x=self.positionX, y=self.positionY)
+                
 
 ################################################################################################## 
 ##################################################################################################
@@ -265,7 +275,6 @@ def main():
     
     global fenetre
     global ListeObjet
-    global ListeObjetCanvas
 
     
     ##################################################################################################
@@ -308,10 +317,7 @@ def main():
 
 
     
-    #Chargement de la variable de l image photo
-    photo = PhotoImage(file="images/wall.gif")
-    #ouverture du fichier qui decrit 
-    f = open("Mac.txt", "r")
+
    
 
     global Frame1
@@ -344,6 +350,10 @@ def main():
     
     ###############################################################################
     #Initialisation et construction de labyrinthe
+    #Chargement de la variable de l image photo
+    photo = PhotoImage(file="images/wall.gif")
+    #ouverture du fichier qui decrit 
+    f = open("Mac.txt", "r")
     i=0
     for line in f:
         
@@ -363,8 +373,8 @@ def main():
                 yy = re.search(r'^'+extension+'-->.+,(.+)', lineD)
                 y = yy.group(1)
 
-                canvas(float(x),float(y),photo,i)
-                
+                #canvas(float(x),float(y),photo,i)
+                Mur(float(x),float(y),Frame1,photo,i)
             except:
                 #rien a faire pas la bonne ligne
                 pass
@@ -376,6 +386,7 @@ def main():
         i=i+1
     f.close()
     ################################################################################
+
     #################################################
     #création de MacGayver
     photoMacGayver=PhotoImage(file="images/macgyver.gif")
@@ -422,40 +433,37 @@ def main():
 
     
     fenetre.mainloop()
-    
-
-                
-
+              
         
 def versDroite(evt):
    Mac.deplacementVersDroite()
-   rammasserObjetEtVictoire()
+   ramasserObjetEtVictoire()
 
 def versGauche(evt):
    Mac.deplacementVersGauche()
-   rammasserObjetEtVictoire()
+   ramasserObjetEtVictoire()
    
 def versHaut(evt):
    Mac.deplacementVersHaut()
-   rammasserObjetEtVictoire()
+   ramasserObjetEtVictoire()
    
 def versBas(evt):
    Mac.deplacementVersBas()
-   rammasserObjetEtVictoire()
+   ramasserObjetEtVictoire()
 
    
-def rammasserObjetEtVictoire():
-   rammasserLesObjets()
+def ramasserObjetEtVictoire():
+   ramasserLesObjets()
    nombreObjetRamasser()
    if Mac.macDansZoneGardien():
         Mac.nombreDeFoisDansZone=+1
         gagner(Mac.positionX,Mac.positionY)
         
-def rammasserLesObjets():
+def ramasserLesObjets():
         #On regarde si MacGayver se trouve sur un objet si oui , on le supprime
         for objet in ListeObjet:
-            if Mac.rammasseObjet(objet.positionX,objet.positionY):
-                objet.objetEstRammasser()
+            if Mac.ramasseObjet(objet.positionX,objet.positionY):
+                objet.objetEstRamasser()
                 ListeObjet.remove(objet)
 
 def nombreObjetRamasser():
@@ -466,18 +474,7 @@ def nombreObjetRamasser():
     else:
         stringVar.set(str(Mac.objetRamasser) +" objets ramassés.")
         
-def canvas(x,y,photo,i):
-    borderwidth=-4
-    borderheight=-5
-    placeX =(i%15)*45
-    placeY=(int(i/15))*45
-    
-  
- 
-    canvas = Canvas(Frame1,width=45, height=45, borderwidth=0, highlightthickness=0)
-    canvas.create_image(borderwidth+(x), borderheight+(y), anchor=NW, image=photo)
-    canvas.place(x=placeX, y=placeY)
-    return canvas
+
 
 
     
