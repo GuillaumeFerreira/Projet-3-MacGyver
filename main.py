@@ -133,7 +133,15 @@ class MacGayver(ElementLabyrinthe):
                 pass
 
             return bougerPossible
-                
+            #retourne True ou false pour savoir si MacGayver est dans la zone
+        
+        def macDansZoneGardien(self):
+            if self.positionX>555 and self.positionY>500:
+                    macInZone=True
+            else:
+                    macInZone=False
+            return macInZone
+        
             #Déplace MacGayver vers la Droite dans le labyrinthe
         def deplacementVersDroite(self):
             self.positionX=self.positionX+22.5
@@ -417,6 +425,9 @@ def main():
                 
         return float(valx)
     ####################################################
+
+
+
     #Ajout des objets
     listeImgDecObj=[]
     listeImgDecObj.append(-197)
@@ -573,16 +584,21 @@ def main():
     
 def versDroite(evt):
    Mac.deplacementVersDroite()
+   if Mac.macDansZoneGardien():
+        gagner(Mac.positionX,Mac.positionY)
    
 def versGauche(evt):
    Mac.deplacementVersGauche()
-   
+   if Mac.macDansZoneGardien():
+        gagner(Mac.positionX,Mac.positionY)   
 def versHaut(evt):
    Mac.deplacementVersHaut()
-   
+   if Mac.macDansZoneGardien():
+        gagner(Mac.positionX,Mac.positionY)   
 def versBas(evt):
    Mac.deplacementVersBas()
-    
+   if Mac.macDansZoneGardien():
+        gagner(Mac.positionX,Mac.positionY)    
   
 def canvasObj(x,y,photo,decalage):
     
@@ -1013,11 +1029,12 @@ def toucheeventD(evt):
     
     ramasserObj(MacX,MacY)
     gagner(MacX,MacY)
-
+RevenuSortiZone=True
 def gagner(x,y):
     global nbPresentation
     global nbobj
     global RevenuSortiZone
+    
     if x>555 and y>500 and len(nbObjRamasser)==6:
         global fenetreGagner
         fenetreGagner = Tk()
