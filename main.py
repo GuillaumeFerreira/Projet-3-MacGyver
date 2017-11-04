@@ -21,25 +21,38 @@ class ElementLabyrinthe:
             ElementLabyrinthe.id_element =+1
                 
 class MacGayver(ElementLabyrinthe):
+        #Position initiale de MacGayver.
+        #Position en abscisse par rapport au coin en haut à gauche. 
         positionX=51
+        #Position en ordonnée par rapport au coin en haut à gauche. 
         positionY=46
-        
-        
-        
+
         
         def __init__(self,Frame1,photo):
-            print("init")
+            #Initialisation de l'image de MacGayver dans le labyrinthe
             self.canvasMacGayver=Canvas(Frame1,width=32, height=43, borderwidth=0,highlightthickness=0)
             self.canvasMacGayver.create_image(0, 0, anchor=NW, image=photo)
             self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
+            
+            #Déplace MacGayver vers la Droite dans le labyrinthe
         def deplacementVersDroite(self):
             self.positionX=self.positionX+22.5
+            self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
+
+            #Déplace MacGayver vers la Gauche dans le labyrinthe
         def deplacementVersGauche(self):
             self.positionX=self.positionX-22.5
+            self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
+            
+            #Déplace MacGayver vers la Bas dans le labyrinthe
         def deplacementVersBas(self):
-            self.positionX=self.positionY-22.5
+            self.positionY=self.positionY+22.5
+            self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
+            
+            #Déplace MacGayver vers la Haut dans le labyrinthe
         def deplacementVersHaut(self):
-            self.positionX=self.positionY+22.5
+            self.positionY=self.positionY-22.5
+            self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
             
 
 class Objet(ElementLabyrinthe):
@@ -206,6 +219,7 @@ def main():
     MacY=46
     i=1
     photoMacGayver=PhotoImage(file="images/macgyver.gif")
+    global Mac
     Mac=MacGayver(Frame1,photoMacGayver)
     
     #################################################
@@ -392,15 +406,30 @@ def main():
     canvas13.place(x=MacX, y=MacY)
     
 
+    #pression sur la touche directionnelle fleche droite du clavier
+    fenetre.bind('<Right>',versDroite)
+    #pression sur la touche directionnelle fleche gauche du clavier
+    fenetre.bind('<Left>', versGauche)
+    #pression sur la touche directionnelle fleche haut du clavier
+    fenetre.bind('<Up>', versHaut)
+    #pression sur la touche directionnelle fleche bas du clavier
+    fenetre.bind('<Down>', versBas)
+
     
-    fenetre.bind('<Right>', toucheeventR) 
-    fenetre.bind('<Left>', toucheeventL)
-    fenetre.bind('<Up>', toucheeventU)
-    fenetre.bind('<Down>', toucheeventD)
-
-
-   
     fenetre.mainloop()
+    
+def versDroite(evt):
+   Mac.deplacementVersDroite()
+   
+def versGauche(evt):
+   Mac.deplacementVersGauche()
+   
+def versHaut(evt):
+   Mac.deplacementVersHaut()
+   
+def versBas(evt):
+   Mac.deplacementVersBas()
+    
   
 def canvasObj(x,y,photo,decalage):
     
