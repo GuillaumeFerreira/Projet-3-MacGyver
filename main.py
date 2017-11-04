@@ -13,7 +13,8 @@ import random
 #################################################################################################
 ###############################  Définition des Class  ##########################################
 class ElementLabyrinthe:
-        
+        positionX=0
+        positionY=0
         id_element=0
         
         def __init__(self):
@@ -66,15 +67,15 @@ class ElementLabyrinthe:
             return droit
         
 class MacGayver(ElementLabyrinthe):
-        #Position initiale de MacGayver.
-        #Position en abscisse par rapport au coin en haut à gauche. 
-        positionX=51
-        #Position en ordonnée par rapport au coin en haut à gauche. 
-        positionY=46
-
-        
-        def __init__(self,FrameLabyrinthe,photo):
+       
+        def __init__(self,FrameLabyrinthe,photo):    
             #Initialisation de l'image de MacGayver dans le labyrinthe
+                
+            #Position initiale de MacGayver.
+            #Position en abscisse par rapport au coin en haut à gauche.
+            self.positionX=51
+            #Position en ordonnée par rapport au coin en haut à gauche.
+            self.positionY=46
             self.canvasMacGayver=Canvas(FrameLabyrinthe,width=32, height=43, borderwidth=0,highlightthickness=0)
             self.canvasMacGayver.create_image(0, 0, anchor=NW, image=photo)
             self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
@@ -217,24 +218,24 @@ class MacGayver(ElementLabyrinthe):
 
 
 class Objet(ElementLabyrinthe):
-        numero_objet=0
+        listeImgDecObj=[]
+        listeImgDecObj.append(-197)
+        listeImgDecObj.append(-158)
+        listeImgDecObj.append(-4)
+        listeImgDecObj.append(-120)
+        listeImgDecObj.append(-81)
+        listeImgDecObj.append(-42)
         
-        def __init__(self):
-            #Incremente le numéro à chaque Objet
-            Objet.numero_objet += 1
-            
-            coord=self.coordValide()
-            self.x=float(coord.split(",")[0])
-            self.y=float(coord.split(",")[1])
-            
+        def __init__(self,listeCoord,FrameLabyrinthe,photo,id_obj):
+            self.id_obj=id_obj
+            self.positionX=random.choice(listeCoord)
+            self.positionY=random.choice(listeCoord)
+            self.canvasObjet=Canvas(FrameLabyrinthe,width=39, height=43, borderwidth=0,highlightthickness=0)
+            self.canvasObjet.create_image(Objet.listeImgDecObj[id_obj], -1, anchor=NW, image=photo)
+            self.canvasObjet.place(x=self.positionX, y=self.positionY)
             
         
-        def coordValide(self):
-            
-            x=random.choice(listeCoordX)
-            y=random.choice(listeCoordy)
-            coord= str(x) + "," + str(y)
-            return coord
+
 
 ################################################################################################## 
 
@@ -290,10 +291,12 @@ def main():
     ##################################################################################################
     #Construction de la liste de coordonnées permetant d'optimiser les chances du coordonnées valides
     #Pour la position des Objets
+    listeCoord=[]
     listeCoordX=[]
     listeCoordy=[]
     nb=23
     while nb <570:
+        listeCoord.append(nb)    
         listeCoordX.append(nb)
         listeCoordy.append(nb)
         nb=nb+22.5
@@ -385,9 +388,10 @@ def main():
     
     #################################################
     #Creation de la liste d objets
+    photoObjet=PhotoImage(file="images/tc-image005.gif")
     ListeObjet=[]
     for i in range(6):
-        newObjet=Objet()
+        newObjet=Objet(listeCoord,Frame1,photoObjet,i)
         ListeObjet.append(newObjet)
     #################################################
 
@@ -443,123 +447,123 @@ def main():
     listeCoordObjValideX=[]
     listeCoordObjValideY=[]
     photo6=PhotoImage(file="images/tc-image005.gif")
-    for objet in ListeObjet:
-
-        
-        valx2=objet.x
-        valy=objet.y
-        coordValide= False
-        while coordValide == False:
-            if int(valx2/45)<valx2/45:
-                Pos=int(valx2/45)+1
-            else:
-                Pos=int(valx2/45)
-                
-            if int((valx2+39)/45)<(valx2+39)/45:
-                PosD=int((valx2+39)/45)+1
-            else:
-                PosD=int((valx2+39)/45)
-                
-            if int(valy/45)<valy/45:
-                PosH=int((valy)/45)+1
-            else:
-                PosH=int((valy)/45)
-                
-            if int((valy+43)/45)<(valy+43)/45:
-                PosB=int((valy+43)/45)+1
-            else:
-                PosB=int((valy+43)/45)
-
-            condition1="False"
-            condition2="False"
-            condition3="False"
-            condition4="False"
-            NumImgBD=(PosB*15)+PosD-15
-            NumImgBG=(PosB*15)+Pos-15
-            NumImgHD=(PosH*15)+PosD-15
-            NumImgHG=(PosH*15)+Pos-15
-
-
-            if NumImgBD!=NumImgHD and NumImgBD!=NumImgBG:
-                
-                condition1=regarderDroit(NumImgBD,"HautGauche")
-                condition2=regarderDroit(NumImgHD,"BasGauche")
-                condition3=regarderDroit(NumImgBG,"HautDroit")
-                condition4=regarderDroit(NumImgHG,"BasDroit")
-
-                if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-
-                    canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
-
-                    listeCoordObjValideX.append(int(valx2))
-                    listeCoordObjValideY.append(int(valy))
-                    coordValide=True
-                    i=i+1
-                else:
-                   
-                    valx2=random.choice(listeCoordX)
-                    valy=random.choice(listeCoordy)
-                    
-            elif NumImgBD!=NumImgHD and NumImgBD==NumImgBG:
-                condition1=regarderDroit(NumImgBD,"HautDroit")
-                condition2=regarderDroit(NumImgBG,"HautGauche")
-                condition3=regarderDroit(NumImgHD,"BasDroit")
-                condition4=regarderDroit(NumImgHG,"BasGauche")
- 
-                if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-
-                    canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
-
-                    listeCoordObjValideX.append(int(valx2))
-                    listeCoordObjValideY.append(int(valy))
-                    coordValide=True
-                    i=i+1
-                else:
-                   
-                    valx2=random.choice(listeCoordX)
-                    valy=random.choice(listeCoordy)
-            elif NumImgBD==NumImgHD and NumImgBD!=NumImgBG:
-                condition1=regarderDroit(NumImgBD,"BasGauche")
-                condition2=regarderDroit(NumImgHD,"HautGauche")
-                condition3=regarderDroit(NumImgBG,"BasDroit")
-                condition4=regarderDroit(NumImgHG,"HautDroit")
-
-
-                
-                if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-
-                    canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
-
-                    listeCoordObjValideX.append(int(valx2))
-                    listeCoordObjValideY.append(int(valy))
-                    coordValide=True
-                    i=i+1
-                else:
-
-                    valx2=random.choice(listeCoordX)
-                    valy=random.choice(listeCoordy)
-                    
-            elif NumImgBD==NumImgHD and NumImgBG==NumImgBD:
-                condition1=regarderDroit(NumImgBG,"BasGauche")
-                condition2=regarderDroit(NumImgHG,"HautGauche")
-                condition3=regarderDroit(NumImgBD,"BasDroit")
-                condition4=regarderDroit(NumImgHD,"HautDroit")
-
-                if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
-
-                    canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
-
-                    listeCoordObjValideX.append(int(valx2))
-                    listeCoordObjValideY.append(int(valy))
-                    coordValide=True
-                    i=i+1
-                else:
-                    
-                    valx2=random.choice(listeCoordX)
-                    valy=random.choice(listeCoordy)
-           
-            else:
-                pass
+##    for objet in ListeObjet:
+##
+##        
+##        valx2=objet.x
+##        valy=objet.y
+##        coordValide= False
+##        while coordValide == False:
+##            if int(valx2/45)<valx2/45:
+##                Pos=int(valx2/45)+1
+##            else:
+##                Pos=int(valx2/45)
+##                
+##            if int((valx2+39)/45)<(valx2+39)/45:
+##                PosD=int((valx2+39)/45)+1
+##            else:
+##                PosD=int((valx2+39)/45)
+##                
+##            if int(valy/45)<valy/45:
+##                PosH=int((valy)/45)+1
+##            else:
+##                PosH=int((valy)/45)
+##                
+##            if int((valy+43)/45)<(valy+43)/45:
+##                PosB=int((valy+43)/45)+1
+##            else:
+##                PosB=int((valy+43)/45)
+##
+##            condition1="False"
+##            condition2="False"
+##            condition3="False"
+##            condition4="False"
+##            NumImgBD=(PosB*15)+PosD-15
+##            NumImgBG=(PosB*15)+Pos-15
+##            NumImgHD=(PosH*15)+PosD-15
+##            NumImgHG=(PosH*15)+Pos-15
+##
+##
+##            if NumImgBD!=NumImgHD and NumImgBD!=NumImgBG:
+##                
+##                condition1=regarderDroit(NumImgBD,"HautGauche")
+##                condition2=regarderDroit(NumImgHD,"BasGauche")
+##                condition3=regarderDroit(NumImgBG,"HautDroit")
+##                condition4=regarderDroit(NumImgHG,"BasDroit")
+##
+##                if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
+##
+##                    canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
+##
+##                    listeCoordObjValideX.append(int(valx2))
+##                    listeCoordObjValideY.append(int(valy))
+##                    coordValide=True
+##                    i=i+1
+##                else:
+##                   
+##                    valx2=random.choice(listeCoordX)
+##                    valy=random.choice(listeCoordy)
+##                    
+##            elif NumImgBD!=NumImgHD and NumImgBD==NumImgBG:
+##                condition1=regarderDroit(NumImgBD,"HautDroit")
+##                condition2=regarderDroit(NumImgBG,"HautGauche")
+##                condition3=regarderDroit(NumImgHD,"BasDroit")
+##                condition4=regarderDroit(NumImgHG,"BasGauche")
+## 
+##                if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
+##
+##                    canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
+##
+##                    listeCoordObjValideX.append(int(valx2))
+##                    listeCoordObjValideY.append(int(valy))
+##                    coordValide=True
+##                    i=i+1
+##                else:
+##                   
+##                    valx2=random.choice(listeCoordX)
+##                    valy=random.choice(listeCoordy)
+##            elif NumImgBD==NumImgHD and NumImgBD!=NumImgBG:
+##                condition1=regarderDroit(NumImgBD,"BasGauche")
+##                condition2=regarderDroit(NumImgHD,"HautGauche")
+##                condition3=regarderDroit(NumImgBG,"BasDroit")
+##                condition4=regarderDroit(NumImgHG,"HautDroit")
+##
+##
+##                
+##                if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
+##
+##                    canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
+##
+##                    listeCoordObjValideX.append(int(valx2))
+##                    listeCoordObjValideY.append(int(valy))
+##                    coordValide=True
+##                    i=i+1
+##                else:
+##
+##                    valx2=random.choice(listeCoordX)
+##                    valy=random.choice(listeCoordy)
+##                    
+##            elif NumImgBD==NumImgHD and NumImgBG==NumImgBD:
+##                condition1=regarderDroit(NumImgBG,"BasGauche")
+##                condition2=regarderDroit(NumImgHG,"HautGauche")
+##                condition3=regarderDroit(NumImgBD,"BasDroit")
+##                condition4=regarderDroit(NumImgHD,"HautDroit")
+##
+##                if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
+##
+##                    canvasObj(float(valx2),float(valy),photo6,listeImgDecObj[i])
+##
+##                    listeCoordObjValideX.append(int(valx2))
+##                    listeCoordObjValideY.append(int(valy))
+##                    coordValide=True
+##                    i=i+1
+##                else:
+##                    
+##                    valx2=random.choice(listeCoordX)
+##                    valy=random.choice(listeCoordy)
+##           
+##            else:
+##                pass
 
 
                                 
