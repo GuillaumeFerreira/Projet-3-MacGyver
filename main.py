@@ -172,7 +172,7 @@ class MacGayver(ElementLabyrinthe):
             self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
 
             self.objetRamasser=0
-            
+            self.nombreDeFoisDansZone=0
             #retourne True ou false pour savoir si MacGayver est dans la zone
         
         def macDansZoneGardien(self):
@@ -218,7 +218,9 @@ class MacGayver(ElementLabyrinthe):
             
             if (int(self.positionX)>= int(xDeObjet) and int(self.positionX) < int(xDeObjet+39)) or (int(self.positionX+32)>= int(xDeObjet) and int(self.positionX+32) < int(xDeObjet+39)):
                 if (int(self.positionY) >= int(yDeObjet-10) and int(self.positionY) < int(yDeObjet+43)) or (int(self.positionY+43) > int(yDeObjet) and int(self.positionY+43) < int(yDeObjet+40)) :
+                    self.objetRamasser=self.objetRamasser+1
                     return True
+                
                 else:
                     return False
             else:
@@ -262,20 +264,9 @@ class Objet(ElementLabyrinthe):
 def main():
     
     global fenetre
-    global MacX
-    global MacY
-    global listeCoordX
-    global listeCoordy
     global ListeObjet
     global ListeObjetCanvas
-    global nbObjRamasser
-    global nbPresentation
-    global nbobj
-    nbobj=0
-    nbPresentation=0
-    RevenuSortiZone=True
-    nbObjRamasser=[]
-    ListeObjetCanvas=[]
+
     
     ##################################################################################################
     #Construction de la fenêtre Tkinter
@@ -308,13 +299,9 @@ def main():
     #Construction de la liste de coordonnées permetant d'optimiser les chances du coordonnées valides
     #Pour la position des Objets
     listeCoord=[]
-    listeCoordX=[]
-    listeCoordy=[]
     nb=23
     while nb <570:
         listeCoord.append(nb)    
-        listeCoordX.append(nb)
-        listeCoordy.append(nb)
         nb=nb+22.5
     ##################################################################################################
         
@@ -411,8 +398,8 @@ def main():
     canvas14.create_image(0, 0, anchor=NW, image=photo3)
     canvas14.place(x=592, y=570)
     ##################################################
-
-    
+    ##################################################
+    #petit escalier
     photo4=Image.open('images/tc-image007.png')
     canvas15 = Canvas(Frame1,width=32, height=36, borderwidth=0,highlightthickness=0)
 
@@ -420,14 +407,8 @@ def main():
     img = ImageTk.PhotoImage(photo4.resize(resolution))
     canvas15.create_image(-2, -200, anchor=NW, image=img)
     canvas15.place(x=592, y=610)
+    ###################################################
 
-
-    i=0
-    xprec=[]
-    global listeCoordObjValideX
-    global listeCoordObjValideY
-    listeCoordObjValideX=[]
-    listeCoordObjValideY=[]
 
 
     #Si pression sur la touche directionnelle fleche droite du clavier déclenche fonction versDroite
@@ -441,37 +422,50 @@ def main():
 
     
     fenetre.mainloop()
+    
+
+                
+
+        
+def versDroite(evt):
+   Mac.deplacementVersDroite()
+   rammasserObjetEtVictoire()
+
+def versGauche(evt):
+   Mac.deplacementVersGauche()
+   rammasserObjetEtVictoire()
+   
+def versHaut(evt):
+   Mac.deplacementVersHaut()
+   rammasserObjetEtVictoire()
+   
+def versBas(evt):
+   Mac.deplacementVersBas()
+   rammasserObjetEtVictoire()
+
+   
+def rammasserObjetEtVictoire():
+   rammasserLesObjets()
+   nombreObjetRamasser()
+   if Mac.macDansZoneGardien():
+        Mac.nombreDeFoisDansZone=+1
+        gagner(Mac.positionX,Mac.positionY)
+        
 def rammasserLesObjets():
         #On regarde si MacGayver se trouve sur un objet si oui , on le supprime
         for objet in ListeObjet:
             if Mac.rammasseObjet(objet.positionX,objet.positionY):
                 objet.objetEstRammasser()
-                Mac.objetRamasser=+1
-                
-def versDroite(evt):
-   Mac.deplacementVersDroite()
-   rammasserLesObjets()            
-   if Mac.macDansZoneGardien():
-        gagner(Mac.positionX,Mac.positionY)
-   
-def versGauche(evt):
-   Mac.deplacementVersGauche()
-   rammasserLesObjets()
-   if Mac.macDansZoneGardien():
-        gagner(Mac.positionX,Mac.positionY)   
-def versHaut(evt):
-   Mac.deplacementVersHaut()
-   rammasserLesObjets()
-   if Mac.macDansZoneGardien():
-        gagner(Mac.positionX,Mac.positionY)   
-def versBas(evt):
-   Mac.deplacementVersBas()
-   rammasserLesObjets()
-   if Mac.macDansZoneGardien():
-        gagner(Mac.positionX,Mac.positionY)    
-  
+                ListeObjet.remove(objet)
 
-
+def nombreObjetRamasser():
+    if Mac.objetRamasser==0:
+        stringVar.set(" - ")
+    elif Mac.objetRamasser==1:
+        stringVar.set( str(Mac.objetRamasser) +" objet ramassé.")
+    else:
+        stringVar.set(str(Mac.objetRamasser) +" objets ramassés.")
+        
 def canvas(x,y,photo,i):
     borderwidth=-4
     borderheight=-5
@@ -493,7 +487,7 @@ def gagner(x,y):
     global nbobj
     global RevenuSortiZone
     
-    if x>555 and y>500 and len(nbObjRamasser)==6:
+    if x>555 and y>500 and Mac.objetRamasser==6:
         global fenetreGagner
         fenetreGagner = Tk()
         fenetreGagner.title('Victoire')
@@ -507,24 +501,24 @@ def gagner(x,y):
         Button(fenetreGagner,text='Quitter', command=quit).place(x=120, y=80)
         Button(fenetreGagner,text='Rejouer' , command=rejouer).place(x=250, y=80)
         
-    elif x>555 and y>500 and len(nbObjRamasser)<6:
+    elif x>555 and y>500 and Mac.objetRamasser<6:
         
-        if nbobj!=len(nbObjRamasser):
-            nbobj=len(nbObjRamasser)
+        if nbobj!=Mac.objetRamasser:
+            nbobj=Mac.objetRamasser
             nbPresentation=nbPresentation+1
             RevenuSortiZone=False
-        elif nbobj==len(nbObjRamasser) and RevenuSortiZone:
+        elif nbobj==Mac.objetRamasser and RevenuSortiZone:
             stringVarGardien.set("Tu te crois malin!\n Tu n'as rien récupéré de plus, va t'en d'ici tout de suite!!!")
             nbPresentation=nbPresentation+1
             RevenuSortiZone=False
         print(nbPresentation)                        
         if nbPresentation==1:
-            if len(nbObjRamasser)==1:
-                stringVarGardien.set("Quoi ? Seulement " + str(len(nbObjRamasser)) +" objet ramassé!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
+            if Mac.objetRamasser==1:
+                stringVarGardien.set("Quoi ? Seulement " + str(Mac.objetRamasser) +" objet ramassé!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
             else:
-                stringVarGardien.set("Quoi ? Seulement " + str(len(nbObjRamasser)) +" objets ramassés!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
-        elif nbPresentation==2 and nbobj!=len(nbObjRamasser):
-            stringVarGardien.set("C'est la deuxième fois que tu viens me voir!\n Tu n'as que " + str(len(nbObjRamasser)) +" objets!\n Je te déconseille de revenir me voir une troisième fois \n sans tous les objets!")
+                stringVarGardien.set("Quoi ? Seulement " + str(lMac.objetRamasser) +" objets ramassés!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
+        elif nbPresentation==2 and nbobj!=Mac.objetRamasser:
+            stringVarGardien.set("C'est la deuxième fois que tu viens me voir!\n Tu n'as que " + str(Mac.objetRamasser) +" objets!\n Je te déconseille de revenir me voir une troisième fois \n sans tous les objets!")
         elif nbPresentation==3:
             global fenetrePerdu
             fenetrePerdu = Tk()
@@ -542,54 +536,7 @@ def gagner(x,y):
         
         RevenuSortiZone=True
         print("Pas encore au bout du labyrinthe")
-def ramasserObj(x,y):
-    i=0
-    
-    for xDansListe in listeCoordObjValideX:
-        
-        if (int(x)>= int(xDansListe) and int(x) < int(xDansListe+39)) or (int(x+32)>= int(xDansListe) and int(x+32) < int(xDansListe+39)):
-            if (int(y) >= int(listeCoordObjValideY[i]-10) and int(y) < int(listeCoordObjValideY[i]+43)) or (int(y+43) > int(listeCoordObjValideY[i]) and int(y+43) < int(listeCoordObjValideY[i]+40)) :
-                print("On ramase l objet")
-                j=0
-                
-                for objCanvas in ListeObjetCanvas:
-                    
-                    if j == i:
-                        
-                        try:
-                            
-                            Itrouver=False
-                            for chiffre in nbObjRamasser:
-                                if chiffre==i:
-                                    Itrouver=True
-                                else:
-                                    pass
-                            if Itrouver==True:
-                                pass
-                            else:
-                                nbObjRamasser.append(i)
-                                
-                                if len(nbObjRamasser)==1:
-                                    stringVar.set(str(len(nbObjRamasser)) +" objet a été ramassé")
-                                    
-                                else:
-                                    stringVar.set(str(len(nbObjRamasser)) +" objets ont été ramassés")
-                                    
-                        except:
-                            nbObjRamasser.append(i)
-                            
-                            
-                        objCanvas.destroy()
-                    j=j+1
 
-                
-                
-            else:
-                print("Pas d objet a ramasser Y")
-
-        else:
-            print("Pas d objet a ramasser")
-        i=i+1
 def rejouer():
     fenetreGagner.destroy()
     fenetre.destroy()
