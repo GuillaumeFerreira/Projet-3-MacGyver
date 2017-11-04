@@ -43,22 +43,22 @@ class ElementLabyrinthe:
                 entierArrondi=int(valeurCoord/45)
             return entierArrondi
 
-            #Renvoie le numéro de l'image de la partie Haut Gauche de MacGayver
+            #Renvoie le numéro de l'image de la partie Haut Gauche de l'élement
         def numImgSousHautGauche(self):
             return ((self.PosHaut()*15)+ self.PosGauche()-15)
         
-            #Renvoie le numéro de l'image de la partie Haut Droite de MacGayver
+            #Renvoie le numéro de l'image de la partie Haut Droite de l'élement
         def numImgSousHautDroite(self):
             return ((self.PosHaut()*15)+ self.PosDroite()-15)
         
-            #Renvoie le numéro de l'image de la partie Bas Gauche de MacGayver
+            #Renvoie le numéro de l'image de la partie Bas Gauche de l'élement
         def numImgSousBasGauche(self):
             return ((self.PosBas()*15)+ self.PosGauche()-15)
         
-            #Renvoie le numéro de l'image de la partie Bas Droite de MacGayver
+            #Renvoie le numéro de l'image de la partie Bas Droite de l'élement
         def numImgSousBasDroite(self):
             return ((self.PosBas()*15)+ self.PosDroite()-15)
-        #renvoie le droit de MacGayver à avancer ou non
+        #renvoie le droit de se positionner ou non
         def droitDeBougerOuPas(self,condition1,condition2,condition3,condition4):
 
             if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
@@ -77,10 +77,10 @@ class ElementLabyrinthe:
             
             if NumImgBD!=NumImgHD and NumImgBD!=NumImgBG:
                 if self.droitDeBougerOuPas(self.regarderDroitLabyrinthe(NumImgBD,"HautGauche"),self.regarderDroitLabyrinthe(NumImgHD,"BasGauche"),self.regarderDroitLabyrinthe(NumImgBG,"HautDroit"),self.regarderDroitLabyrinthe(NumImgHG,"BasDroit")):
-                    #on peut bouger
+                    #on peut se positionner
                     bougerPossible=True
                 else:
-                    #On ne peut pas bouger
+                    #On ne peut pas se positionner
                     bougerPossible=False
 
             elif NumImgBD!=NumImgHD and NumImgBD==NumImgBG:
@@ -88,24 +88,24 @@ class ElementLabyrinthe:
                     #on peut bouger
                     bougerPossible=True
                 else:
-                    #On ne peut pas bouger
+                    #On ne peut pas se positionner
                     bougerPossible=False
 
             elif NumImgBD==NumImgHD and NumImgBD!=NumImgBG:
                 if self.droitDeBougerOuPas(self.regarderDroitLabyrinthe(NumImgBD,"BasGauche"),self.regarderDroitLabyrinthe(NumImgHD,"HautGauche"),self.regarderDroitLabyrinthe(NumImgBG,"BasDroit"),self.regarderDroitLabyrinthe(NumImgHG,"HautDroit")):
-                    #on peut bouger
+                    #on peut se positionner
                     bougerPossible=True
                 else:
-                    #On ne peut pas bouger
+                    #On ne peut pas se positionner
                     bougerPossible=False
 
             
             elif NumImgBD==NumImgHD and NumImgBD==NumImgBG:
                 if self.droitDeBougerOuPas(self.regarderDroitLabyrinthe(NumImgBG,"BasGauche"),self.regarderDroitLabyrinthe(NumImgHG,"HautGauche"),self.regarderDroitLabyrinthe(NumImgBD,"BasDroit"),self.regarderDroitLabyrinthe(NumImgHD,"HautDroit")):
-                    #on peut bouger
+                    #on peut se positionner
                     bougerPossible=True
                 else:
-                    #On ne peut pas bouger
+                    #On ne peut pas se positionner
                     bougerPossible=False                    
             else:
                 pass
@@ -239,7 +239,10 @@ class Objet(ElementLabyrinthe):
                 while self.situation()!=True:
                         self.positionX=random.choice(listeCoord)
                         self.positionY=random.choice(listeCoord)
-        
+                        
+        def objetEstRammasser(self):
+                self.canvasObjet.destroy()
+                
 
 
 ################################################################################################## 
@@ -572,11 +575,11 @@ def main():
 
 
                                 
-    photo2 = PhotoImage(file="images/macgyver.gif")
-    global canvas13
-    canvas13 = Canvas(Frame1,width=32, height=43, borderwidth=0,highlightthickness=0)
-    canvas13.create_image(0, 0, anchor=NW, image=photo2)
-    canvas13.place(x=MacX, y=MacY)
+##    photo2 = PhotoImage(file="images/macgyver.gif")
+##    global canvas13
+##    canvas13 = Canvas(Frame1,width=32, height=43, borderwidth=0,highlightthickness=0)
+##    canvas13.create_image(0, 0, anchor=NW, image=photo2)
+##    canvas13.place(x=MacX, y=MacY)
     
 
     #Si pression sur la touche directionnelle fleche droite du clavier déclenche fonction versDroite
