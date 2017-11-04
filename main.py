@@ -19,69 +19,46 @@ class ElementLabyrinthe:
         
         def __init__(self):
             ElementLabyrinthe.id_element =+1
-            
-        def regarderDroitLabyrinthe(self,NumImg,positionAregarder):            
-            f = open("Mac.txt", "r")
-            
-            
-            for line in f:
-                global extension
-                try:
-                    e = re.search(r'^'+str(NumImg)+'-->(.+)', line)
-                    
-                    extension = e.group(1)
-                    
-                except:
-                    #rien a faire pas la bonne ligne
-                    pass
-                else:
-                    #rien a faire pas la bonne ligne
-                    pass
-             
-            fLab = open("DroitLab.txt", "r")
-                
-            for lineD in fLab:
-                
-                try:
-                    x = re.search(r'^'+extension+'-->.+HG=(.+),HD=(.+),BG=(.+),BD=(.+)/', lineD)
-                      
-                    
-                    if positionAregarder=="HautGauche":
-                        droit=x.group(1)
-                    elif positionAregarder=="HautDroit":
-                        droit=x.group(2)
-                    elif positionAregarder=="BasGauche":
-                        droit=x.group(3)
-                    elif positionAregarder=="BasDroit":
-                        droit=x.group(4)
-                    else:
-                        pass
-                    
-                except:
-                    #rien a faire pas la bonne ligne
-                    pass
-                else:
-                    #rien a faire pas la bonne ligne
-                    pass
-
-            return droit
+        #Renvoie la position Gauche dans la FrameLabyrinthe
+        def PosGauche(self):
+            return self.entierOrPlusUn(self.positionX)
         
-class MacGayver(ElementLabyrinthe):
-       
-        def __init__(self,FrameLabyrinthe,photo):    
-            #Initialisation de l'image de MacGayver dans le labyrinthe
-                
-            #Position initiale de MacGayver.
-            #Position en abscisse par rapport au coin en haut à gauche.
-            self.positionX=51
-            #Position en ordonnée par rapport au coin en haut à gauche.
-            self.positionY=46
-            self.canvasMacGayver=Canvas(FrameLabyrinthe,width=32, height=43, borderwidth=0,highlightthickness=0)
-            self.canvasMacGayver.create_image(0, 0, anchor=NW, image=photo)
-            self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
+            #Renvoie la position Droite dans la FrameLabyrinthe
+        def PosDroite(self):
+            return self.entierOrPlusUn(self.positionX+32)
+        
+            #Renvoie la position Haut dans la FrameLabyrinthe
+        def PosHaut(self):
+            return self.entierOrPlusUn(self.positionY)
+        
+             #Renvoie la position Bas dans la FrameLabyrinthe
+        def PosBas(self):
+            return self.entierOrPlusUn(self.positionY+43)
+        
+            #retourne la valeur entier arrondi au superier ou non 
+        def entierOrPlusUn(self,valeurCoord):
+            if int(valeurCoord/45)<valeurCoord/45:
+                entierArrondi=int(valeurCoord/45)+1
+            else:
+                entierArrondi=int(valeurCoord/45)
+            return entierArrondi
 
-
-            #renvoie le droit de MacGayver à avancer ou non
+            #Renvoie le numéro de l'image de la partie Haut Gauche de MacGayver
+        def numImgSousHautGauche(self):
+            return ((self.PosHaut()*15)+ self.PosGauche()-15)
+        
+            #Renvoie le numéro de l'image de la partie Haut Droite de MacGayver
+        def numImgSousHautDroite(self):
+            return ((self.PosHaut()*15)+ self.PosDroite()-15)
+        
+            #Renvoie le numéro de l'image de la partie Bas Gauche de MacGayver
+        def numImgSousBasGauche(self):
+            return ((self.PosBas()*15)+ self.PosGauche()-15)
+        
+            #Renvoie le numéro de l'image de la partie Bas Droite de MacGayver
+        def numImgSousBasDroite(self):
+            return ((self.PosBas()*15)+ self.PosDroite()-15)
+        #renvoie le droit de MacGayver à avancer ou non
         def droitDeBougerOuPas(self,condition1,condition2,condition3,condition4):
 
             if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
@@ -91,7 +68,7 @@ class MacGayver(ElementLabyrinthe):
             
             return bouger
         
-        def situationMacGayver(self):
+        def situation(self):
         
             NumImgBD=self.numImgSousBasDroite()
             NumImgHD=self.numImgSousHautDroite()
@@ -134,6 +111,69 @@ class MacGayver(ElementLabyrinthe):
                 pass
 
             return bougerPossible
+        
+        def regarderDroitLabyrinthe(self,NumImg,positionAregarder):            
+            f = open("Mac.txt", "r")
+            
+            
+            for line in f:
+                global extension
+                try:
+                    e = re.search(r'^'+str(NumImg)+'-->(.+)', line)
+                    
+                    extension = e.group(1)
+                    
+                except:
+                    #rien a faire pas la bonne ligne
+                    pass
+                else:
+                    #rien a faire pas la bonne ligne
+                    pass
+             
+            fLab = open("DroitLab.txt", "r")
+                
+            for lineD in fLab:
+                global droit
+                try:
+                    x = re.search(r'^'+extension+'-->.+HG=(.+),HD=(.+),BG=(.+),BD=(.+)/', lineD)
+                      
+                    
+                    if positionAregarder=="HautGauche":
+                        droit=x.group(1)
+                    elif positionAregarder=="HautDroit":
+                        droit=x.group(2)
+                    elif positionAregarder=="BasGauche":
+                        droit=x.group(3)
+                    elif positionAregarder=="BasDroit":
+                        droit=x.group(4)
+                    else:
+                        pass
+                    
+                except:
+                    #rien a faire pas la bonne ligne
+                    pass
+                else:
+                    #rien a faire pas la bonne ligne
+                    pass
+
+            return droit
+        
+class MacGayver(ElementLabyrinthe):
+       
+        def __init__(self,FrameLabyrinthe,photo):    
+            #Initialisation de l'image de MacGayver dans le labyrinthe
+                
+            #Position initiale de MacGayver.
+            #Position en abscisse par rapport au coin en haut à gauche.
+            self.positionX=51
+            #Position en ordonnée par rapport au coin en haut à gauche.
+            self.positionY=46
+            self.canvasMacGayver=Canvas(FrameLabyrinthe,width=32, height=43, borderwidth=0,highlightthickness=0)
+            self.canvasMacGayver.create_image(0, 0, anchor=NW, image=photo)
+            self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
+
+
+            
             #retourne True ou false pour savoir si MacGayver est dans la zone
         
         def macDansZoneGardien(self):
@@ -146,7 +186,7 @@ class MacGayver(ElementLabyrinthe):
             #Déplace MacGayver vers la Droite dans le labyrinthe
         def deplacementVersDroite(self):
             self.positionX=self.positionX+22.5
-            if self.situationMacGayver()==True: 
+            if self.situation()==True: 
                 self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
             else:
                 self.positionX=self.positionX-22.5
@@ -154,7 +194,7 @@ class MacGayver(ElementLabyrinthe):
             #Déplace MacGayver vers la Gauche dans le labyrinthe
         def deplacementVersGauche(self):
             self.positionX=self.positionX-22.5
-            if self.situationMacGayver()==True:    
+            if self.situation()==True:    
                 self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
             else:
                 self.positionX=self.positionX+22.5
@@ -162,7 +202,7 @@ class MacGayver(ElementLabyrinthe):
             #Déplace MacGayver vers la Bas dans le labyrinthe
         def deplacementVersBas(self):
             self.positionY=self.positionY+22.5
-            if self.situationMacGayver()==True:
+            if self.situation()==True:
                 self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
             else:
                 self.positionY=self.positionY-22.5
@@ -170,50 +210,12 @@ class MacGayver(ElementLabyrinthe):
             #Déplace MacGayver vers la Haut dans le labyrinthe
         def deplacementVersHaut(self):
             self.positionY=self.positionY-22.5
-            if self.situationMacGayver()==True:
+            if self.situation()==True:
                 self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
             else:
                 self.positionY=self.positionY+22.5
             
-            #Renvoie la position Gauche dans la FrameLabyrinthe
-        def PosGauche(self):
-            return self.entierOrPlusUn(self.positionX)
-        
-            #Renvoie la position Droite dans la FrameLabyrinthe
-        def PosDroite(self):
-            return self.entierOrPlusUn(self.positionX+32)
-        
-            #Renvoie la position Haut dans la FrameLabyrinthe
-        def PosHaut(self):
-            return self.entierOrPlusUn(self.positionY)
-        
-             #Renvoie la position Bas dans la FrameLabyrinthe
-        def PosBas(self):
-            return self.entierOrPlusUn(self.positionY+43)
-        
-            #retourne la valeur entier arrondi au superier ou non 
-        def entierOrPlusUn(self,valeurCoord):
-            if int(valeurCoord/45)<valeurCoord/45:
-                entierArrondi=int(valeurCoord/45)+1
-            else:
-                entierArrondi=int(valeurCoord/45)
-            return entierArrondi
-
-            #Renvoie le numéro de l'image de la partie Haut Gauche de MacGayver
-        def numImgSousHautGauche(self):
-            return ((self.PosHaut()*15)+ self.PosGauche()-15)
-        
-            #Renvoie le numéro de l'image de la partie Haut Droite de MacGayver
-        def numImgSousHautDroite(self):
-            return ((self.PosHaut()*15)+ self.PosDroite()-15)
-        
-            #Renvoie le numéro de l'image de la partie Bas Gauche de MacGayver
-        def numImgSousBasGauche(self):
-            return ((self.PosBas()*15)+ self.PosGauche()-15)
-        
-            #Renvoie le numéro de l'image de la partie Bas Droite de MacGayver
-        def numImgSousBasDroite(self):
-            return ((self.PosBas()*15)+ self.PosDroite()-15)
+            
 
 
 
@@ -228,12 +230,15 @@ class Objet(ElementLabyrinthe):
         
         def __init__(self,listeCoord,FrameLabyrinthe,photo,id_obj):
             self.id_obj=id_obj
-            self.positionX=random.choice(listeCoord)
-            self.positionY=random.choice(listeCoord)
+            self.valideCoordonneesObjet(listeCoord)
             self.canvasObjet=Canvas(FrameLabyrinthe,width=39, height=43, borderwidth=0,highlightthickness=0)
             self.canvasObjet.create_image(Objet.listeImgDecObj[id_obj], -1, anchor=NW, image=photo)
             self.canvasObjet.place(x=self.positionX, y=self.positionY)
             
+        def valideCoordonneesObjet(self,listeCoord):
+                while self.situation()!=True:
+                        self.positionX=random.choice(listeCoord)
+                        self.positionY=random.choice(listeCoord)
         
 
 
