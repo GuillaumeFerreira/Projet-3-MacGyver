@@ -16,7 +16,6 @@ class ElementLabyrinthe:
         
         id_element=0
         
-
         def __init__(self):
             ElementLabyrinthe.id_element =+1
                 
@@ -28,11 +27,14 @@ class MacGayver(ElementLabyrinthe):
         positionY=46
 
         
-        def __init__(self,Frame1,photo):
+        def __init__(self,FrameLabyrinthe,photo):
             #Initialisation de l'image de MacGayver dans le labyrinthe
-            self.canvasMacGayver=Canvas(Frame1,width=32, height=43, borderwidth=0,highlightthickness=0)
+            self.canvasMacGayver=Canvas(FrameLabyrinthe,width=32, height=43, borderwidth=0,highlightthickness=0)
             self.canvasMacGayver.create_image(0, 0, anchor=NW, image=photo)
             self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
+
+
+
             
             #Déplace MacGayver vers la Droite dans le labyrinthe
         def deplacementVersDroite(self):
@@ -43,6 +45,7 @@ class MacGayver(ElementLabyrinthe):
         def deplacementVersGauche(self):
             self.positionX=self.positionX-22.5
             self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
+            print (str(self.numImgSousHautGauche()))
             
             #Déplace MacGayver vers la Bas dans le labyrinthe
         def deplacementVersBas(self):
@@ -54,6 +57,47 @@ class MacGayver(ElementLabyrinthe):
             self.positionY=self.positionY-22.5
             self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
             
+            #Renvoie la position Gauche dans la FrameLabyrinthe
+        def PosGauche(self):
+            return entierOrPlusUn(self.positionX)
+        
+            #Renvoie la position Droite dans la FrameLabyrinthe
+        def PosDroite(self):
+            return entierOrPlusUn(self.positionX+32)
+        
+            #Renvoie la position Haut dans la FrameLabyrinthe
+        def PosHaut(self):
+            return entierOrPlusUn(self.positionY)
+        
+             #Renvoie la position Bas dans la FrameLabyrinthe
+        def PosBas(self):
+            return entierOrPlusUn(self.positionY+43)
+        
+            #retourne la valeur entier arrondi au superier ou non 
+        def entierOrPlusUn(self,valeurCoord):
+            if int(valeurCoord/45)<valeurCoord/45:
+                entierArrondi=int(valeurCoord/45)+1
+            else:
+                entierArrondi=int(valeurCoord/45)
+            return entierArrondi
+
+            #Renvoie le numéro de l'image de la partie Haut Gauche de MacGayver
+        def numImgSousHautGauche(self):
+            return ((self.PosHaut()*15)+ self.PosGauche()-15)
+        
+            #Renvoie le numéro de l'image de la partie Haut Droite de MacGayver
+        def numImgSousHautDroite(self):
+            return ((self.PosHaut()*15)+ self.PosDroite()-15)
+        
+            #Renvoie le numéro de l'image de la partie Bas Gauche de MacGayver
+        def numImgSousBasGauche(self):
+            return ((self.PosBas()*15)+ self.PosGauche()-15)
+        
+            #Renvoie le numéro de l'image de la partie Bas Droite de MacGayver
+        def numImgSousHautGauche(self):
+            return ((self.PosBas()*15)+ self.PosDroite()-15)
+
+
 
 class Objet(ElementLabyrinthe):
         numero_objet=0
@@ -406,13 +450,13 @@ def main():
     canvas13.place(x=MacX, y=MacY)
     
 
-    #pression sur la touche directionnelle fleche droite du clavier
+    #Si pression sur la touche directionnelle fleche droite du clavier déclenche fonction versDroite
     fenetre.bind('<Right>',versDroite)
-    #pression sur la touche directionnelle fleche gauche du clavier
+    #Si pression sur la touche directionnelle fleche gauche du clavier déclenche fonction versGauche
     fenetre.bind('<Left>', versGauche)
-    #pression sur la touche directionnelle fleche haut du clavier
+    #Si pression sur la touche directionnelle fleche haut du clavier déclenche fonction versHaut
     fenetre.bind('<Up>', versHaut)
-    #pression sur la touche directionnelle fleche bas du clavier
+    #Si pression sur la touche directionnelle fleche bas du clavier déclenche fonction versBas
     fenetre.bind('<Down>', versBas)
 
     
