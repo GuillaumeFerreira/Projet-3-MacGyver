@@ -279,9 +279,9 @@ class Gardien(ElementLabyrinthe):
             self.positionX=592
             self.positionY=570
             self.memoireNbObjet=0
-            canvasGardien= Canvas(FrameLabyrinthe,width=32, height=36, borderwidth=0,highlightthickness=0)
-            canvasGardien.create_image(0, 0, anchor=NW, image=photo)
-            canvasGardien.place(x=self.positionX, y=self.positionY)
+            self.canvasGardien= Canvas(FrameLabyrinthe,width=32, height=36, borderwidth=0,highlightthickness=0)
+            self.canvasGardien.create_image(0, 0, anchor=NW, image=photo)
+            self.canvasGardien.place(x=self.positionX, y=self.positionY)
 class Fenetre:
     
     def __init__(self,title,width,height):

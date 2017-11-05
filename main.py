@@ -10,18 +10,19 @@ from ClassObject import *
 from Func import *
 
 
-        
+     
 def main():
     ################################
     #Pour passer la fonction .bind()
-    global fenetre
     global ListeObjet
     global Mac
     global ongletObjet
     global ongletGardien
     global GardienLab
     ################################
-
+    #Pour passer command
+    global fenetre
+    ###############################
     
     fenetre=Fenetre('Labyrinthe P3',1400, 1000)
     fenetre.construction()
@@ -67,11 +68,11 @@ def main():
     ##################################################
     ##################################################
     #petit escalier
-    photo4=Image.open('images/tc-image007.png')
+    photoEscalier=Image.open('images/tc-image007.png')
     canvas15 = Canvas(frameLabyrinthe.frame,width=32, height=36, borderwidth=0,highlightthickness=0)
 
     resolution = (100,263)
-    img = ImageTk.PhotoImage(photo4.resize(resolution))
+    img = ImageTk.PhotoImage(photoEscalier.resize(resolution))
     canvas15.create_image(-2, -200, anchor=NW, image=img)
     canvas15.place(x=592, y=610)
     ###################################################
