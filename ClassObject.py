@@ -18,23 +18,23 @@ class ElementLabyrinthe:
         def __init__(self):
             ElementLabyrinthe.id_element =+1
         #Renvoie la position Gauche dans la FrameLabyrinthe
-        def PosGauche(self):
-            return self.entierOrPlusUn(self.positionX)
+        def __PosGauche(self):
+            return self.__entierOrPlusUn(self.positionX)
         
             #Renvoie la position Droite dans la FrameLabyrinthe
-        def PosDroite(self):
-            return self.entierOrPlusUn(self.positionX+32)
+        def __PosDroite(self):
+            return self.__entierOrPlusUn(self.positionX+32)
         
             #Renvoie la position Haut dans la FrameLabyrinthe
-        def PosHaut(self):
-            return self.entierOrPlusUn(self.positionY)
+        def __PosHaut(self):
+            return self.__entierOrPlusUn(self.positionY)
         
              #Renvoie la position Bas dans la FrameLabyrinthe
-        def PosBas(self):
-            return self.entierOrPlusUn(self.positionY+43)
+        def __PosBas(self):
+            return self.__entierOrPlusUn(self.positionY+43)
         
             #retourne la valeur entier arrondi au superier ou non 
-        def entierOrPlusUn(self,valeurCoord):
+        def __entierOrPlusUn(self,valeurCoord):
             if int(valeurCoord/45)<valeurCoord/45:
                 entierArrondi=int(valeurCoord/45)+1
             else:
@@ -42,22 +42,22 @@ class ElementLabyrinthe:
             return entierArrondi
 
             #Renvoie le numéro de l'image de la partie Haut Gauche de l'élement
-        def numImgSousHautGauche(self):
-            return ((self.PosHaut()*15)+ self.PosGauche()-15)
+        def __numImgSousHautGauche(self):
+            return ((self.__PosHaut()*15)+ self.__PosGauche()-15)
         
             #Renvoie le numéro de l'image de la partie Haut Droite de l'élement
-        def numImgSousHautDroite(self):
-            return ((self.PosHaut()*15)+ self.PosDroite()-15)
+        def __numImgSousHautDroite(self):
+            return ((self.__PosHaut()*15)+ self.__PosDroite()-15)
         
             #Renvoie le numéro de l'image de la partie Bas Gauche de l'élement
-        def numImgSousBasGauche(self):
-            return ((self.PosBas()*15)+ self.PosGauche()-15)
+        def __numImgSousBasGauche(self):
+            return ((self.__PosBas()*15)+ self.__PosGauche()-15)
         
             #Renvoie le numéro de l'image de la partie Bas Droite de l'élement
-        def numImgSousBasDroite(self):
-            return ((self.PosBas()*15)+ self.PosDroite()-15)
+        def __numImgSousBasDroite(self):
+            return ((self.__PosBas()*15)+ self.__PosDroite()-15)
         #renvoie le droit de se positionner ou non
-        def droitDeBougerOuPas(self,condition1,condition2,condition3,condition4):
+        def __droitDeBougerOuPas(self,condition1,condition2,condition3,condition4):
 
             if condition1=="True" and condition2=="True" and condition3=="True" and condition4=="True":
                 bouger=True
@@ -68,13 +68,13 @@ class ElementLabyrinthe:
         
         def situation(self):
         
-            NumImgBD=self.numImgSousBasDroite()
-            NumImgHD=self.numImgSousHautDroite()
-            NumImgBG=self.numImgSousBasGauche()
-            NumImgHG=self.numImgSousHautGauche()
+            NumImgBD=self.__numImgSousBasDroite()
+            NumImgHD=self.__numImgSousHautDroite()
+            NumImgBG=self.__numImgSousBasGauche()
+            NumImgHG=self.__numImgSousHautGauche()
             
             if NumImgBD!=NumImgHD and NumImgBD!=NumImgBG:
-                if self.droitDeBougerOuPas(self.regarderDroitLabyrinthe(NumImgBD,"HautGauche"),self.regarderDroitLabyrinthe(NumImgHD,"BasGauche"),self.regarderDroitLabyrinthe(NumImgBG,"HautDroit"),self.regarderDroitLabyrinthe(NumImgHG,"BasDroit")):
+                if self.__droitDeBougerOuPas(self.__regarderDroitLabyrinthe(NumImgBD,"HautGauche"),self.__regarderDroitLabyrinthe(NumImgHD,"BasGauche"),self.__regarderDroitLabyrinthe(NumImgBG,"HautDroit"),self.__regarderDroitLabyrinthe(NumImgHG,"BasDroit")):
                     #on peut se positionner
                     bougerPossible=True
                 else:
@@ -82,7 +82,7 @@ class ElementLabyrinthe:
                     bougerPossible=False
 
             elif NumImgBD!=NumImgHD and NumImgBD==NumImgBG:
-                if self.droitDeBougerOuPas(self.regarderDroitLabyrinthe(NumImgBD,"HautDroit"),self.regarderDroitLabyrinthe(NumImgBG,"HautGauche"),self.regarderDroitLabyrinthe(NumImgHD,"BasDroit"),self.regarderDroitLabyrinthe(NumImgHG,"BasGauche")):
+                if self.__droitDeBougerOuPas(self.__regarderDroitLabyrinthe(NumImgBD,"HautDroit"),self.__regarderDroitLabyrinthe(NumImgBG,"HautGauche"),self.__regarderDroitLabyrinthe(NumImgHD,"BasDroit"),self.__regarderDroitLabyrinthe(NumImgHG,"BasGauche")):
                     #on peut bouger
                     bougerPossible=True
                 else:
@@ -90,7 +90,7 @@ class ElementLabyrinthe:
                     bougerPossible=False
 
             elif NumImgBD==NumImgHD and NumImgBD!=NumImgBG:
-                if self.droitDeBougerOuPas(self.regarderDroitLabyrinthe(NumImgBD,"BasGauche"),self.regarderDroitLabyrinthe(NumImgHD,"HautGauche"),self.regarderDroitLabyrinthe(NumImgBG,"BasDroit"),self.regarderDroitLabyrinthe(NumImgHG,"HautDroit")):
+                if self.__droitDeBougerOuPas(self.__regarderDroitLabyrinthe(NumImgBD,"BasGauche"),self.__regarderDroitLabyrinthe(NumImgHD,"HautGauche"),self.__regarderDroitLabyrinthe(NumImgBG,"BasDroit"),self.__regarderDroitLabyrinthe(NumImgHG,"HautDroit")):
                     #on peut se positionner
                     bougerPossible=True
                 else:
@@ -99,7 +99,7 @@ class ElementLabyrinthe:
 
             
             elif NumImgBD==NumImgHD and NumImgBD==NumImgBG:
-                if self.droitDeBougerOuPas(self.regarderDroitLabyrinthe(NumImgBG,"BasGauche"),self.regarderDroitLabyrinthe(NumImgHG,"HautGauche"),self.regarderDroitLabyrinthe(NumImgBD,"BasDroit"),self.regarderDroitLabyrinthe(NumImgHD,"HautDroit")):
+                if self.__droitDeBougerOuPas(self.__regarderDroitLabyrinthe(NumImgBG,"BasGauche"),self.__regarderDroitLabyrinthe(NumImgHG,"HautGauche"),self.__regarderDroitLabyrinthe(NumImgBD,"BasDroit"),self.__regarderDroitLabyrinthe(NumImgHD,"HautDroit")):
                     #on peut se positionner
                     bougerPossible=True
                 else:
@@ -110,7 +110,7 @@ class ElementLabyrinthe:
 
             return bougerPossible
         
-        def regarderDroitLabyrinthe(self,NumImg,positionAregarder):            
+        def __regarderDroitLabyrinthe(self,NumImg,positionAregarder):            
             f = open("Mac.txt", "r")
             
             
@@ -248,13 +248,13 @@ class Objet(ElementLabyrinthe):
 
         def __init__(self,FrameLabyrinthe,photo,id_obj):
             self.id_obj=id_obj
-            self.valideCoordonneesObjet()
+            self.__valideCoordonneesObjet()
             self.canvasObjet=Canvas(FrameLabyrinthe,width=39, height=43, borderwidth=0,highlightthickness=0)
             self.canvasObjet.create_image(Objet.listeImgDecObj[id_obj], -1, anchor=NW, image=photo)
             self.canvasObjet.place(x=self.positionX, y=self.positionY)
             
             
-        def valideCoordonneesObjet(self):
+        def __valideCoordonneesObjet(self):
                 while self.situation()!=True:
                         self.positionX=random.choice(Objet.listeCoord)
                         self.positionY=random.choice(Objet.listeCoord)
