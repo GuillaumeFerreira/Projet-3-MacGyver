@@ -54,18 +54,21 @@ def creationDuLabyrinthe(photo,Frame1):
 def ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre):
    ramasserLesObjets(ListeObjet,Mac)
    nombreObjetRamasser(Mac,stringVar)
-   print (str(Mac.nombreDeFoisDansZone))
+   print (str(Mac.etreResortiDeLaZone))
+   situation="autre"
    if Mac.macDansZoneGardien() and Mac.etreResortiDeLaZone:
         Mac.etreResortiDeLaZone=False
         Mac.nombreDeFoisDansZone=Mac.nombreDeFoisDansZone+1
         if Mac.objetRamasser==6:
-            return ("gagner")
+            
+            situation="gagner"
             #gagner(fenetre)
 			
         else:
             if Mac.nombreDeFoisDansZone>=3:
                 #perdu(fenetre)
-                return ("perdu")
+                print("perdu")
+                situation="perdu"
             elif GardienLab.memoireNbObjet==Mac.objetRamasser and Mac.nombreDeFoisDansZone<3:
                     #gardien en tres en colere
                     stringVarGardien.set("Tu te crois malin!\n Tu n'as rien récupéré de plus, va t'en d'ici tout de suite!!!")
@@ -82,6 +85,7 @@ def ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab
    else:
         if Mac.macDansZoneGardien()!=True:
             Mac.etreResortiDeLaZone=True
+   return situation
         
 def ramasserLesObjets(ListeObjet,Mac):
         #On regarde si MacGayver se trouve sur un objet si oui , on le supprime
