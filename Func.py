@@ -51,35 +51,35 @@ def creationDuLabyrinthe(photo,Frame1):
 
 
    
-def ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre):
+def ramasserObjetEtVictoire(ListeObjet,Mac,ongletObjet,ongletGardien,GardienLab):
    ramasserLesObjets(ListeObjet,Mac)
-   nombreObjetRamasser(Mac,stringVar)
-   print (str(Mac.etreResortiDeLaZone))
-   situation="autre"
+   nombreObjetRamasser(Mac,ongletObjet)
+   
+   situation=0
    if Mac.macDansZoneGardien() and Mac.etreResortiDeLaZone:
         Mac.etreResortiDeLaZone=False
         Mac.nombreDeFoisDansZone=Mac.nombreDeFoisDansZone+1
         if Mac.objetRamasser==6:
             
-            situation="gagner"
+            situation=2
             #gagner(fenetre)
 			
         else:
             if Mac.nombreDeFoisDansZone>=3:
                 #perdu(fenetre)
-                print("perdu")
-                situation="perdu"
+                
+                situation=1
             elif GardienLab.memoireNbObjet==Mac.objetRamasser and Mac.nombreDeFoisDansZone<3:
                     #gardien en tres en colere
-                    stringVarGardien.set("Tu te crois malin!\n Tu n'as rien récupéré de plus, va t'en d'ici tout de suite!!!")
+                    ongletGardien.changerTxt("Tu te crois malin!\n Tu n'as rien récupéré de plus, va t'en d'ici tout de suite!!!")
             elif Mac.nombreDeFoisDansZone==2 and GardienLab.memoireNbObjet!=Mac.objetRamasser:
-                stringVarGardien.set("C'est la deuxième fois que tu viens me voir!\n Tu n'as que " + str(Mac.objetRamasser) +" objets!\n Je te déconseille de revenir me voir une troisième fois \n sans tous les objets!")
+                ongletGardien.changerTxt("C'est la deuxième fois que tu viens me voir!\n Tu n'as que " + str(Mac.objetRamasser) +" objets!\n Je te déconseille de revenir me voir une troisième fois \n sans tous les objets!")
             else:
                     #gardien en colere
                 if Mac.objetRamasser==1:
-                    stringVarGardien.set("Quoi ? Seulement " + str(Mac.objetRamasser) +" objet ramassé!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
+                    ongletGardien.changerTxt("Quoi ? Seulement " + str(Mac.objetRamasser) +" objet ramassé!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
                 else:
-                    stringVarGardien.set("Quoi ? Seulement " + str(Mac.objetRamasser) +" objets ramassés!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
+                    ongletGardien.changerTxt("Quoi ? Seulement " + str(Mac.objetRamasser) +" objets ramassés!\n Tu oses venir me voir sans avoir fait le job.\n Ne reviens me voir que si tu les as tous retrouvés!")
                 
         GardienLab.memoireNbObjet=Mac.objetRamasser
    else:
@@ -94,13 +94,13 @@ def ramasserLesObjets(ListeObjet,Mac):
                 objet.objetEstRamasser()
                 ListeObjet.remove(objet)
 
-def nombreObjetRamasser(Mac,stringVar):
+def nombreObjetRamasser(Mac,ongletObjet):
     if Mac.objetRamasser==0:
-        stringVar.set(" - ")
+        ongletObjet.changerTxt(" - ")
     elif Mac.objetRamasser==1:
-        stringVar.set(str(Mac.objetRamasser) +" objet ramassé.")
+        ongletObjet.changerTxt(str(Mac.objetRamasser) +" objet ramassé.")
     else:
-        stringVar.set(str(Mac.objetRamasser) +" objets ramassés.")
+        ongletObjet.changerTxt(str(Mac.objetRamasser) +" objets ramassés.")
         
 
 

@@ -236,18 +236,28 @@ class Objet(ElementLabyrinthe):
         listeImgDecObj.append(-120)
         listeImgDecObj.append(-81)
         listeImgDecObj.append(-42)
-        
-        def __init__(self,listeCoord,FrameLabyrinthe,photo,id_obj):
+        ##################################################################################################
+        #Construction de la liste de coordonnées permetant d'optimiser les chances du coordonnées valides
+        #Pour la position des Objets
+        listeCoord=[]
+        nb=23
+        while nb <570:
+            listeCoord.append(nb)    
+            nb=nb+22.5
+        ##################################################################################################        
+
+        def __init__(self,FrameLabyrinthe,photo,id_obj):
             self.id_obj=id_obj
-            self.valideCoordonneesObjet(listeCoord)
+            self.valideCoordonneesObjet()
             self.canvasObjet=Canvas(FrameLabyrinthe,width=39, height=43, borderwidth=0,highlightthickness=0)
             self.canvasObjet.create_image(Objet.listeImgDecObj[id_obj], -1, anchor=NW, image=photo)
             self.canvasObjet.place(x=self.positionX, y=self.positionY)
             
-        def valideCoordonneesObjet(self,listeCoord):
+            
+        def valideCoordonneesObjet(self):
                 while self.situation()!=True:
-                        self.positionX=random.choice(listeCoord)
-                        self.positionY=random.choice(listeCoord)
+                        self.positionX=random.choice(Objet.listeCoord)
+                        self.positionY=random.choice(Objet.listeCoord)
                         
         def objetEstRamasser(self):
                 self.canvasObjet.destroy()

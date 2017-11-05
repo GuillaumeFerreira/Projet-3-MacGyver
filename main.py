@@ -12,31 +12,21 @@ from Func import *
 
         
 def main():
-    
+    ################################
+    #Pour passer la fonction .bind()
     global fenetre
     global ListeObjet
+    global Mac
+    global ongletObjet
+    global ongletGardien
+    global GardienLab
+    ################################
 
+    
     fenetre=Fenetre('Labyrinthe P3',1400, 1000)
     fenetre.construction()
                              
 
-
-
-    ##################################################################################################
-    #Construction de la liste de coordonnées permetant d'optimiser les chances du coordonnées valides
-    #Pour la position des Objets
-    listeCoord=[]
-    nb=23
-    while nb <570:
-        listeCoord.append(nb)    
-        nb=nb+22.5
-    ##################################################################################################
-        
-
-
-    
-
-   
     frameLabyrinthe=FrameLab(fenetre.fenetre,680,680,400,10)
     frameLabyrinthe.construction()
 
@@ -59,7 +49,7 @@ def main():
     #################################################
     #création de MacGayver
     photoMacGayver=PhotoImage(file="images/macgyver.gif")
-    global Mac
+    
     Mac=MacGayver(frameLabyrinthe.frame,photoMacGayver)
     #################################################
     #################################################
@@ -67,13 +57,12 @@ def main():
     photoObjet=PhotoImage(file="images/tc-image005.gif")
     ListeObjet=[]
     for i in range(6):
-        newObjet=Objet(listeCoord,frameLabyrinthe.frame,photoObjet,i)
+        newObjet=Objet(frameLabyrinthe.frame,photoObjet,i)
         ListeObjet.append(newObjet)
     #################################################  
     #################################################
     #Creation du gardien   
     photoGardien = PhotoImage(file="images/gardien.gif")
-    global GardienLab
     GardienLab=Gardien(frameLabyrinthe.frame,photoGardien)
     ##################################################
     ##################################################
@@ -100,68 +89,60 @@ def main():
 
     fenetre.fenetre.mainloop()
     
+def victoireOrNot(): 
+    situation=ramasserObjetEtVictoire(ListeObjet,Mac,ongletObjet,ongletGardien,GardienLab)
+    if situation==1:
+       perdu()
+    elif situation==2:
+       gagner()
+    else:
+        pass
+    
 def versDroite(evt):
    Mac.deplacementVersDroite()
-   if ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="gagner":
-       gagner()
-   elif ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="perdu":
-       perdu()
-   else:
-        pass
+   victoireOrNot()
+
 
 def versGauche(evt):
    Mac.deplacementVersGauche()
-   print(ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre))
-   if ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="gagner":
-       gagner()
-   elif ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="perdu":
-       perdu()
-   else:
-        pass
+   victoireOrNot()
    
 def versHaut(evt):
    Mac.deplacementVersHaut()
-   if ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="gagner":
-       gagner()
-   elif ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="perdu":
-       perdu()
-   else:
-        pass
+   victoireOrNot()
    
 def versBas(evt):
    Mac.deplacementVersBas()
-   if ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="gagner":
-       gagner()
-   elif ramasserObjetEtVictoire(ListeObjet,Mac,stringVar,stringVarGardien,GardienLab,fenetre)=="perdu":
-       perdu()
-   else:
-        pass              
-
+   victoireOrNot()
    
 def perdu():
+        #declaration global pour passer command
+        global fenetrePerdu
         fenetrePerdu=Fenetre('Game Over',400,250)
         fenetrePerdu.construction()
 
 
-        w = Label(fenetrePerdu, text="Gardien : Je t'avais prévenu ! Bye bye mon ami!\n \n Tu as perdu, mais ne te décourage pas, recommence.")
+        w = Label(fenetrePerdu.fenetre, text="Gardien : Je t'avais prévenu ! Bye bye mon ami!\n \n Tu as perdu, mais ne te décourage pas, recommence.")
         w.place(x=50, y=40)
         fenetre.nePlusBouger()
-        Button(fenetrePerdu,text='Quitter', command=quit).place(x=90, y=180)
-        Button(fenetrePerdu,text='Rejouer' , command=rejouerLoose).place(x=230, y=180)
+        Button(fenetrePerdu.fenetre,text='Quitter', command=quit).place(x=90, y=180)
+        Button(fenetrePerdu.fenetre,text='Rejouer' , command=rejouerLoose).place(x=230, y=180)
 
 def gagner():
+        #declaration global pour passer command
+        global fenetreGagner
         fenetreGagner=Fenetre('Victoire',400,150)
-        fenetreGagner.construction
-        w = Label(fenetreGagner, text="Bravo, le gardien t'a finalement laissé passer, tu es libre!")
+        fenetreGagner.construction()
+        w = Label(fenetreGagner.fenetre, text="Bravo, le gardien t'a finalement laissé passer, tu es libre!")
         w.place(x=50, y=40)
         fenetre.nePlusBouger()
-        Button(fenetreGagner,text='Quitter', command=quit).place(x=120, y=80)
-        Button(fenetreGagner,text='Rejouer' , command=rejouer).place(x=250, y=80)
+        Button(fenetreGagner.fenetre,text='Quitter', command=quit).place(x=120, y=80)
+        Button(fenetreGagner.fenetre,text='Rejouer' , command=rejouer).place(x=250, y=80)
         
 
 
 def rejouer():
-    fenetreGagner.destroy()
+    fenetreGagner.fermerLaFenetre()
     fenetre.fermerLaFenetre()
     main()
 def rejouerLoose():
