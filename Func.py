@@ -10,7 +10,7 @@ import random
 from ClassObject import *
 
 
-def creationDuLabyrinthe(photo,Frame1):
+def creationDuLabyrinthe(photo,frameLabyrinthe):
     ###############################################################################
     #Initialisation et construction de labyrinthe  
     #ouverture du fichier qui decrit 
@@ -35,7 +35,7 @@ def creationDuLabyrinthe(photo,Frame1):
                 y = yy.group(1)
 
                 #canvas(float(x),float(y),photo,i)
-                Mur(float(x),float(y),Frame1,photo,i)
+                Mur(float(x),float(y),frameLabyrinthe,photo,i)
             except:
                 #rien a faire pas la bonne ligne
                 pass
