@@ -7,8 +7,8 @@ import re
 from PIL import Image, ImageTk
 import random
 
-from ClassObject import *
-
+from ElementLabyrinthe import *
+from Personnage import *
 
 def creationDuLabyrinthe(photo,frameLabyrinthe):
     ###############################################################################

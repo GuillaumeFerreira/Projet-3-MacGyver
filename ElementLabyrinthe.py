@@ -41,19 +41,19 @@ class ElementLabyrinthe:
                 entierArrondi=int(valeurCoord/45)
             return entierArrondi
 
-            #Renvoie le numéro de l'image de la partie Haut Gauche de l'élement
+        #Renvoie le numéro de l'image de la partie Haut Gauche de l'élement
         def __numImgSousHautGauche(self):
             return ((self.__PosHaut()*15)+ self.__PosGauche()-15)
         
-            #Renvoie le numéro de l'image de la partie Haut Droite de l'élement
+        #Renvoie le numéro de l'image de la partie Haut Droite de l'élement
         def __numImgSousHautDroite(self):
             return ((self.__PosHaut()*15)+ self.__PosDroite()-15)
         
-            #Renvoie le numéro de l'image de la partie Bas Gauche de l'élement
+        #Renvoie le numéro de l'image de la partie Bas Gauche de l'élement
         def __numImgSousBasGauche(self):
             return ((self.__PosBas()*15)+ self.__PosGauche()-15)
         
-            #Renvoie le numéro de l'image de la partie Bas Droite de l'élement
+        #Renvoie le numéro de l'image de la partie Bas Droite de l'élement
         def __numImgSousBasDroite(self):
             return ((self.__PosBas()*15)+ self.__PosDroite()-15)
         #renvoie le droit de se positionner ou non
@@ -156,111 +156,8 @@ class ElementLabyrinthe:
 
             return droit
         
-class MacGayver(ElementLabyrinthe):
-       
-        def __init__(self,FrameLabyrinthe,photo):    
-            #Initialisation de l'image de MacGayver dans le labyrinthe  
-            #Position initiale de MacGayver.
-            #Position en abscisse par rapport au coin en haut à gauche.
-            self.positionX=51
-            #Position en ordonnée par rapport au coin en haut à gauche.
-            self.positionY=46
-            self.canvasMacGayver=Canvas(FrameLabyrinthe,width=32, height=43, borderwidth=0,highlightthickness=0)
-            self.canvasMacGayver.create_image(0, 0, anchor=NW, image=photo)
-            self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
 
-            self.objetRamasser=0
-            self.nombreDeFoisDansZone=0
-            self.etreResortiDeLaZone=True
-            #retourne True ou false pour savoir si MacGayver est dans la zone
-        
-        def macDansZoneGardien(self):
-            if self.positionX>555 and self.positionY>500:
-                    macInZone=True
-            else:
-                    macInZone=False
-            return macInZone
-        
-            #Déplace MacGayver vers la Droite dans le labyrinthe
-        def deplacementVersDroite(self):
-            self.positionX=self.positionX+22.5
-            if self.situation()==True: 
-                self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
-            else:
-                self.positionX=self.positionX-22.5
-
-            #Déplace MacGayver vers la Gauche dans le labyrinthe
-        def deplacementVersGauche(self):
-            self.positionX=self.positionX-22.5
-            if self.situation()==True:    
-                self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
-            else:
-                self.positionX=self.positionX+22.5
-            
-            #Déplace MacGayver vers la Bas dans le labyrinthe
-        def deplacementVersBas(self):
-            self.positionY=self.positionY+22.5
-            if self.situation()==True:
-                self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
-            else:
-                self.positionY=self.positionY-22.5
-            
-            #Déplace MacGayver vers la Haut dans le labyrinthe
-        def deplacementVersHaut(self):
-            self.positionY=self.positionY-22.5
-            if self.situation()==True:
-                self.canvasMacGayver.place(x=self.positionX, y=self.positionY)
-            else:
-                self.positionY=self.positionY+22.5
-                
-        def ramasseObjet(self,xDeObjet,yDeObjet):
-            
-            if (int(self.positionX)>= int(xDeObjet) and int(self.positionX) < int(xDeObjet+39)) or (int(self.positionX+32)>= int(xDeObjet) and int(self.positionX+32) < int(xDeObjet+39)):
-                if (int(self.positionY) >= int(yDeObjet-10) and int(self.positionY) < int(yDeObjet+43)) or (int(self.positionY+43) > int(yDeObjet) and int(self.positionY+43) < int(yDeObjet+40)) :
-                    self.objetRamasser=self.objetRamasser+1
-                    return True
-                
-                else:
-                    return False
-            else:
-                return False 
-            
-
-
-
-class Objet(ElementLabyrinthe):
-        listeImgDecObj=[]
-        listeImgDecObj.append(-197)
-        listeImgDecObj.append(-158)
-        listeImgDecObj.append(-4)
-        listeImgDecObj.append(-120)
-        listeImgDecObj.append(-81)
-        listeImgDecObj.append(-42)
-        ##################################################################################################
-        #Construction de la liste de coordonnées permetant d'optimiser les chances du coordonnées valides
-        #Pour la position des Objets
-        listeCoord=[]
-        nb=23
-        while nb <570:
-            listeCoord.append(nb)    
-            nb=nb+22.5
-        ##################################################################################################        
-
-        def __init__(self,FrameLabyrinthe,photo,id_obj):
-            self.id_obj=id_obj
-            self.__valideCoordonneesObjet()
-            self.canvasObjet=Canvas(FrameLabyrinthe,width=39, height=43, borderwidth=0,highlightthickness=0)
-            self.canvasObjet.create_image(Objet.listeImgDecObj[id_obj], -1, anchor=NW, image=photo)
-            self.canvasObjet.place(x=self.positionX, y=self.positionY)
-            
-            
-        def __valideCoordonneesObjet(self):
-                while self.situation()!=True:
-                        self.positionX=random.choice(Objet.listeCoord)
-                        self.positionY=random.choice(Objet.listeCoord)
-                        
-        def objetEstRamasser(self):
-                self.canvasObjet.destroy()
+   
                 
 class Mur(ElementLabyrinthe):
         def __init__(self,decalageImgX,decalageImgY,FrameLabyrinthe,photo,id_mur):
@@ -273,57 +170,7 @@ class Mur(ElementLabyrinthe):
             self.canvas.create_image(borderwidth+(decalageImgX), borderheight+(decalageImgY), anchor=NW, image=photo)
             self.canvas.place(x=self.positionX, y=self.positionY)
                 
-class Gardien(ElementLabyrinthe):
 
-        def __init__(self,FrameLabyrinthe,photo):
-            self.positionX=592
-            self.positionY=570
-            self.memoireNbObjet=0
-            self.canvasGardien= Canvas(FrameLabyrinthe,width=32, height=36, borderwidth=0,highlightthickness=0)
-            self.canvasGardien.create_image(0, 0, anchor=NW, image=photo)
-            self.canvasGardien.place(x=self.positionX, y=self.positionY)
-class Fenetre:
-    
-    def __init__(self,title,width,height):
-        self.fenetre=Tk()
-        self.title=title
-        self.height=height
-        self.width=width
 
-    def construction(self):
-        self.fenetre.title(self.title)
-        self.fenetre.geometry("{0}x{1}+0+0".format(self.width,self.height))
-    def fermerLaFenetre(self):
-        self.fenetre.destroy()
-    def nePlusBouger(self):
-        self.fenetre.unbind('<Right>') 
-        self.fenetre.unbind('<Left>')
-        self.fenetre.unbind('<Up>')
-        self.fenetre.unbind('<Down>')
-
-      
-
-class FrameLab:
-    def __init__(self,racine,width,height,x,y):
-        self.frame=Frame(racine, borderwidth=2, relief=GROOVE)
-        self.width=width
-        self.height=height
-        self.x=x
-        self.y=y
-    def construction(self):
-        self.frame.config(width=self.width, height=self.height)
-        self.frame.place(x=self.x, y=self.y)
-class Onglet:
-    def __init__(self,racine,titre,Padx,Pady,x,y):
-        self.labelframe=LabelFrame(racine, text=titre, padx=Padx, pady=Pady)
-        self.x=x
-        self.y=y
-        self.stringVar=StringVar()
-    def construction(self):
-        self.labelframe.place(x=self.x, y=self.y)
-        Label(self.labelframe, textvariable=self.stringVar).pack()
-        self.stringVar.set("-")
-    def changerTxt(self,nouvellePhrase):
-        self.stringVar.set(nouvellePhrase)
 ################################################################################################## 
 ##################################################################################################

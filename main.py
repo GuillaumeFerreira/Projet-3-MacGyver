@@ -6,7 +6,10 @@ import os
 import re
 from PIL import Image, ImageTk
 import random
-from ClassObject import *
+from ElementLabyrinthe import *
+from Personnage import *
+from Object import *
+from ElementTK import *
 from Func import *
 
 
