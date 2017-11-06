@@ -5,7 +5,7 @@ from tkinter import *
 import os
 import re
 from PIL import Image, ImageTk
-import random
+
 
 
 #################################################################################################

@@ -5,7 +5,7 @@ from tkinter import *
 import os
 import re
 from PIL import Image, ImageTk
-import random
+
 from ElementLabyrinthe import *
 
 class Personnage(ElementLabyrinthe):
@@ -91,13 +91,3 @@ class Personnage(ElementLabyrinthe):
                 return False
             
 
-            
-##class Gardien(ElementLabyrinthe):
-##
-##        def __init__(self,FrameLabyrinthe,photo):
-##            self.positionX=592
-##            self.positionY=570
-##            self.memoireNbObjet=0
-##            self.canvasGardien= Canvas(FrameLabyrinthe,width=32, height=36, borderwidth=0,highlightthickness=0)
-##            self.canvasGardien.create_image(0, 0, anchor=NW, image=photo)
-##            self.canvasGardien.place(x=self.positionX, y=self.positionY)
