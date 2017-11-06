@@ -54,7 +54,7 @@ def main():
     #création de MacGayver
     photoMacGayver=PhotoImage(file="images/macgyver.gif")
     
-    Mac=MacGayver(frameLabyrinthe.frame,photoMacGayver)
+    Mac=Personnage.macGayver(frameLabyrinthe.frame,photoMacGayver)
     #################################################
     #################################################
     #Creation de la liste d objets
@@ -67,7 +67,7 @@ def main():
     #################################################
     #Creation du gardien   
     photoGardien = PhotoImage(file="images/gardien.gif")
-    GardienLab=Gardien(frameLabyrinthe.frame,photoGardien)
+    GardienLab=Personnage.gardien(frameLabyrinthe.frame,photoGardien)
     ##################################################
     ##################################################
     #petit escalier
