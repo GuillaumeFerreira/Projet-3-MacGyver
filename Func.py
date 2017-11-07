@@ -35,7 +35,7 @@ def creationDuLabyrinthe(photo,frameLabyrinthe):
                 y = yy.group(1)
 
                 #canvas(float(x),float(y),photo,i)
-                Mur(float(x),float(y),frameLabyrinthe,photo,i)
+                ElementLabyrinthe.mur(float(x),float(y),frameLabyrinthe,photo,i)
             except:
                 #rien a faire pas la bonne ligne
                 pass

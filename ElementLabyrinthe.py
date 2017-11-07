@@ -15,8 +15,20 @@ class ElementLabyrinthe:
         positionY=0
         id_element=0
         
-        def __init__(self):
+        def __init__(self,decalageImgX,decalageImgY,FrameLabyrinthe,photo,positionX,positionY):
+            borderwidth=-4
+            borderheight=-5
             ElementLabyrinthe.id_element =+1
+            self.positionX=positionX
+            self.positionY=positionY
+            self.canvas = Canvas(FrameLabyrinthe,width=45, height=45, borderwidth=0, highlightthickness=0)
+            self.canvas.create_image(borderwidth+(decalageImgX), borderheight+(decalageImgY), anchor=NW, image=photo)
+            self.canvas.place(x=self.positionX, y=self.positionY)
+            
+        @classmethod
+        def mur(cls,decalageImgX,decalageImgY,FrameLabyrinthe,photo,id_mur):
+            return cls(decalageImgX,decalageImgY,FrameLabyrinthe,photo,((id_mur%15)*45),((int(id_mur/15))*45))
+            
         #Renvoie la position Gauche dans la FrameLabyrinthe
         def __PosGauche(self):
             return self.__entierOrPlusUn(self.positionX)
@@ -159,16 +171,16 @@ class ElementLabyrinthe:
 
    
                 
-class Mur(ElementLabyrinthe):
-        def __init__(self,decalageImgX,decalageImgY,FrameLabyrinthe,photo,id_mur):
-            borderwidth=-4
-            borderheight=-5
-            self.positionX =(id_mur%15)*45
-            self.positionY=(int(id_mur/15))*45
-            
-            self.canvas = Canvas(FrameLabyrinthe,width=45, height=45, borderwidth=0, highlightthickness=0)
-            self.canvas.create_image(borderwidth+(decalageImgX), borderheight+(decalageImgY), anchor=NW, image=photo)
-            self.canvas.place(x=self.positionX, y=self.positionY)
+##class Mur(ElementLabyrinthe):
+##        def __init__(self,decalageImgX,decalageImgY,FrameLabyrinthe,photo,id_mur):
+##            borderwidth=-4
+##            borderheight=-5
+##            self.positionX =(id_mur%15)*45
+##            self.positionY=(int(id_mur/15))*45
+##            
+##            self.canvas = Canvas(FrameLabyrinthe,width=45, height=45, borderwidth=0, highlightthickness=0)
+##            self.canvas.create_image(borderwidth+(decalageImgX), borderheight+(decalageImgY), anchor=NW, image=photo)
+##            self.canvas.place(x=self.positionX, y=self.positionY)
                 
 
 
