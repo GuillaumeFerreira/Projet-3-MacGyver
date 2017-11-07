@@ -28,7 +28,7 @@ def main():
     ###############################
     
     fenetre=Fenetre('Labyrinthe P3',1400, 1000)
-    fenetre.construction()
+    fenetre.build()
                              
 
     frameLabyrinthe=FrameLab(fenetre.fenetre,680,680,400,10)
@@ -39,11 +39,11 @@ def main():
 
     ongletConseil=Onglet(fenetre.fenetre,"Conseil",20,20,50,50)
     ongletConseil.construction()
-    ongletConseil.changerTxt("Ramasser tous les objets avant de se présenter \n au gardien. Il tient beaucoup à ses objets.")
+    ongletConseil.change_text("Ramasser tous les objets avant de se présenter \n au gardien. Il tient beaucoup à ses objets.")
 
     ongletGardien=Onglet(fenetre.fenetre,"Gardien",20,20,50,400)
     ongletGardien.construction()
-    ongletGardien.changerTxt("Personne ne sortira tant que je ne serai pas satisfait!")
+    ongletGardien.change_text("Personne ne sortira tant que je ne serai pas satisfait!")
 
     #################################################
     #Initialisation et construction de labyrinthe
@@ -123,7 +123,7 @@ def perdu():
         #declaration global pour passer command
         global fenetrePerdu
         fenetrePerdu=Fenetre('Game Over',400,250)
-        fenetrePerdu.construction()
+        fenetrePerdu.build()
 
 
         w = Label(fenetrePerdu.fenetre, text="Gardien : Je t'avais prévenu ! Bye bye mon ami!\n \n Tu as perdu, mais ne te décourage pas, recommence.")
@@ -136,7 +136,7 @@ def gagner():
         #declaration global pour passer command
         global fenetreGagner
         fenetreGagner=Fenetre('Victoire',400,150)
-        fenetreGagner.construction()
+        fenetreGagner.build()
         w = Label(fenetreGagner.fenetre, text="Bravo, le gardien t'a finalement laissé passer, tu es libre!")
         w.place(x=50, y=40)
         fenetre.nePlusBouger()
@@ -146,16 +146,16 @@ def gagner():
 
 
 def rejouer():
-    fenetreGagner.fermerLaFenetre()
-    fenetre.fermerLaFenetre()
+    fenetreGagner.close_the_window()
+    fenetre.close_the_window()
     main()
 def rejouerLoose():
-    fenetrePerdu.fermerLaFenetre()
-    fenetre.fermerLaFenetre()
+    fenetrePerdu.close_the_window()
+    fenetre.close_the_window()
     main()
 def rejouerDebut():
     
-    fenetre.fermerLaFenetre()
+    fenetre.close_the_window()
     main()
    
 
