@@ -56,7 +56,7 @@ def ramasserObjetEtVictoire(ListeObjet,Mac,ongletObjet,ongletGardien,GardienLab)
    nombreObjetRamasser(Mac,ongletObjet)
    
    situation=0
-   if Mac.macDansZoneGardien() and Mac.etreResortiDeLaZone:
+   if Mac.mac_dans_zone_gardien() and Mac.etreResortiDeLaZone:
         Mac.etreResortiDeLaZone=False
         Mac.nombreDeFoisDansZone=Mac.nombreDeFoisDansZone+1
         if Mac.objetRamasser==6:
@@ -83,7 +83,7 @@ def ramasserObjetEtVictoire(ListeObjet,Mac,ongletObjet,ongletGardien,GardienLab)
                 
         GardienLab.memoireNbObjet=Mac.objetRamasser
    else:
-        if Mac.macDansZoneGardien()!=True:
+        if Mac.mac_dans_zone_gardien()!=True:
             Mac.etreResortiDeLaZone=True
    return situation
         
