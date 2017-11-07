@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from tkinter import Canvas
+
 from ElementLabyrinthe import *
 
 class Personnage(ElementLabyrinthe):

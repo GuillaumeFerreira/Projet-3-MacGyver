@@ -32,17 +32,17 @@ def main():
                              
 
     frameLabyrinthe=FrameLab(fenetre.fenetre,680,680,400,10)
-    frameLabyrinthe.construction()
+    frameLabyrinthe.build()
 
     ongletObjet=Onglet(fenetre.fenetre,"Objets récupérés",20,20,50,200)
-    ongletObjet.construction()
+    ongletObjet.build()
 
     ongletConseil=Onglet(fenetre.fenetre,"Conseil",20,20,50,50)
-    ongletConseil.construction()
+    ongletConseil.build()
     ongletConseil.change_text("Ramasser tous les objets avant de se présenter \n au gardien. Il tient beaucoup à ses objets.")
 
     ongletGardien=Onglet(fenetre.fenetre,"Gardien",20,20,50,400)
-    ongletGardien.construction()
+    ongletGardien.build()
     ongletGardien.change_text("Personne ne sortira tant que je ne serai pas satisfait!")
 
     #################################################
@@ -128,7 +128,7 @@ def perdu():
 
         w = Label(fenetrePerdu.fenetre, text="Gardien : Je t'avais prévenu ! Bye bye mon ami!\n \n Tu as perdu, mais ne te décourage pas, recommence.")
         w.place(x=50, y=40)
-        fenetre.nePlusBouger()
+        fenetre.dont_move()
         Button(fenetrePerdu.fenetre,text='Quitter', command=quit).place(x=90, y=180)
         Button(fenetrePerdu.fenetre,text='Rejouer' , command=rejouerLoose).place(x=230, y=180)
 
@@ -139,7 +139,7 @@ def gagner():
         fenetreGagner.build()
         w = Label(fenetreGagner.fenetre, text="Bravo, le gardien t'a finalement laissé passer, tu es libre!")
         w.place(x=50, y=40)
-        fenetre.nePlusBouger()
+        fenetre.dont_move()
         Button(fenetreGagner.fenetre,text='Quitter', command=quit).place(x=120, y=80)
         Button(fenetreGagner.fenetre,text='Rejouer' , command=rejouer).place(x=250, y=80)
         

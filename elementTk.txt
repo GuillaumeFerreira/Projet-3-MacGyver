@@ -1,0 +1,8 @@
+************* Module ElementTK
+R: 63, 4: Too many arguments (6/5) (too-many-arguments)
+R: 57, 0: Too few public methods (1/2) (too-few-public-methods)
+R: 86, 4: Too many arguments (7/5) (too-many-arguments)
+
+------------------------------------------------------------------
+Your code has been rated at 9.23/10 (previous run: 9.23/10, +0.00)
+
