@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from tkinter import *
-import os
-from PIL import Image, ImageTk
-
+import re
+from tkinter import Canvas,NW
 
 
 #################################################################################################
@@ -13,14 +11,14 @@ class ElementLabyrinthe:
         positionX=0
         positionY=0
         id_element=0
-        
-        def __init__(self,decalageImgX,decalageImgY,FrameLabyrinthe,photo,positionX,positionY):
+
+        def __init__(self, decalageImgX, decalageImgY, FrameLabyrinthe, photo, positionX, positionY):
             borderwidth=-4
             borderheight=-5
             ElementLabyrinthe.id_element =+1
             self.positionX=positionX
             self.positionY=positionY
-            self.canvas = Canvas(FrameLabyrinthe,width=45, height=45, borderwidth=0, highlightthickness=0)
+            self.canvas = Canvas(FrameLabyrinthe, width=45, height=45, borderwidth=0, highlightthickness=0)
             self.canvas.create_image(borderwidth+(decalageImgX), borderheight+(decalageImgY), anchor=NW, image=photo)
             self.canvas.place(x=self.positionX, y=self.positionY)
             
@@ -54,7 +52,7 @@ class ElementLabyrinthe:
 
         #Renvoie le numéro de l'image de la partie Haut Gauche de l'élement
         def __numImgSousHautGauche(self):
-            return ((self.__PosHaut()*15)+ self.__PosGauche()-15)
+            return ((self.__PosHaut() * 15) + self.__PosGauche() - 15)
         
         #Renvoie le numéro de l'image de la partie Haut Droite de l'élement
         def __numImgSousHautDroite(self):
