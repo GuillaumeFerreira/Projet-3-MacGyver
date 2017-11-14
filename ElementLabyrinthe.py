@@ -24,24 +24,8 @@ class ElementLabyrinthe:
     def mur(cls, decalageImgX, decalageImgY, frame_labyrinthe, photo, id_mur):
         return cls(decalageImgX, decalageImgY, frame_labyrinthe, photo, ((id_mur % 15) * 45), ((int(id_mur / 15)) * 45))
 
-    #Renvoie la position Gauche dans la frame_labyrinthe
-    def __PosGauche(self):
-        return self.__entierOrPlusUn(self.positionX)
-
-    #Renvoie la position Droite dans la frame_labyrinthe
-    def __PosDroite(self):
-        return self.__entierOrPlusUn(self.positionX + 32)
-
-    #Renvoie la position Haut dans la frame_labyrinthe
-    def __PosHaut(self):
-        return self.__entierOrPlusUn(self.positionY)
-
-    #Renvoie la position Bas dans la frame_labyrinthe
-    def __PosBas(self):
-        return self.__entierOrPlusUn(self.positionY + 43)
-
     #retourne la valeur entier arrondi au superier ou non 
-    def __entierOrPlusUn(self, valeurCoord):
+    def __int_more_one(self, valeurCoord):
         if int(valeurCoord / 45) < valeurCoord / 45:
             entierArrondi = int(valeurCoord / 45) + 1
         else:
@@ -50,19 +34,19 @@ class ElementLabyrinthe:
 
     #Renvoie le numéro de l'image de la partie Haut Gauche de l'élement
     def __numImgSousHautGauche(self):
-        return ((self.__PosHaut() * 15) + self.__PosGauche() - 15)
+        return ((self.__int_more_one(self.positionY) * 15) + self.__int_more_one(self.positionX) - 15)
 
     #Renvoie le numéro de l'image de la partie Haut Droite de l'élement
     def __numImgSousHautDroite(self):
-        return ((self.__PosHaut() * 15) + self.__PosDroite() - 15)
+        return ((self.__int_more_one(self.positionY) * 15) + self.__int_more_one(self.positionX + 32) - 15)
 
     #Renvoie le numéro de l'image de la partie Bas Gauche de l'élement
     def __numImgSousBasGauche(self):
-        return ((self.__PosBas() * 15) + self.__PosGauche() - 15)
+        return ((self.__int_more_one(self.positionY + 43) * 15) + self.__int_more_one(self.positionX) - 15)
 
     #Renvoie le numéro de l'image de la partie Bas Droite de l'élement
     def __numImgSousBasDroite(self):
-        return ((self.__PosBas() * 15) + self.__PosDroite() - 15)
+        return ((self.__int_more_one(self.positionY + 43) * 15) + self.__int_more_one(self.positionX + 32) - 15)
 
     #renvoie le droit de se positionner ou non
     def __droitDeBougerOuPas(self, condition1, condition2, condition3, condition4):
