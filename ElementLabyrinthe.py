@@ -15,11 +15,22 @@ from tkinter import Canvas, NW
 
 
 class ElementLabyrinthe:
+    """
+
+       Class ElementLabyrinthe aims to enable collision management
+       and construct the labyrinth
+
+    """
     positionX = 0
     positionY = 0
     id_element = 0
 
     def __init__(self, shift_x, shift_y, frame_labyrinthe, photo, positionX, positionY):
+        """
+
+            Define an element of labyrinth
+
+        """
         ElementLabyrinthe.id_element = +1
         self.positionX = positionX
         self.positionY = positionY
@@ -29,6 +40,11 @@ class ElementLabyrinthe:
 
     @classmethod
     def mur(cls, shift_x, shift_y, frame_labyrinthe, photo, id_mur):
+        """
+
+            Allows the construction of the labyrinth
+
+        """
         return cls(shift_x, shift_y, frame_labyrinthe, photo, ((id_mur % 15) * 45), ((int(id_mur / 15)) * 45))
 
     #retourne la valeur entier arrondi au superier ou non
@@ -62,9 +78,6 @@ class ElementLabyrinthe:
 
         elif num_img_bd == num_img_hd and num_img_bd == num_img_bg:
             return bool(self.__move_or_not(self.__regarderDroitLabyrinthe(num_img_bg, "BasGauche"), self.__regarderDroitLabyrinthe(num_img_hg, "HautGauche"), self.__regarderDroitLabyrinthe(num_img_bd, "BasDroit"), self.__regarderDroitLabyrinthe(num_img_hd, "HautDroit")))
-
-
-        
 
     def __regarderDroitLabyrinthe(self, num_img, position_to_watch):
         file = open("Mac.txt", "r")
