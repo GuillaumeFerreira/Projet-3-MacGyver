@@ -1,0 +1,21 @@
+************* Module Main
+C: 45, 0: Line too long (127/100) (line-too-long)
+C: 77, 0: Line too long (103/100) (line-too-long)
+C:155, 0: Line too long (152/100) (line-too-long)
+C:171, 0: Line too long (110/100) (line-too-long)
+W: 24, 4: Global variable 'LISTE_OBJET' undefined at the module level (global-variable-undefined)
+W: 25, 4: Global variable 'MAC' undefined at the module level (global-variable-undefined)
+W: 26, 4: Global variable 'ONGLET_OBJET' undefined at the module level (global-variable-undefined)
+W: 27, 4: Global variable 'ONGLET_GARDIEN' undefined at the module level (global-variable-undefined)
+W: 28, 4: Global variable 'GARDIEN_LAB' undefined at the module level (global-variable-undefined)
+W: 31, 4: Global variable 'FENETRE' undefined at the module level (global-variable-undefined)
+W:109,10: Unused argument 'evt' (unused-argument)
+W:118, 9: Unused argument 'evt' (unused-argument)
+W:127,12: Unused argument 'evt' (unused-argument)
+W:136, 9: Unused argument 'evt' (unused-argument)
+W:152, 4: Global variable 'FENETRE_PERDU' undefined at the module level (global-variable-undefined)
+W:168, 4: Global variable 'FENETRE_GAGNER' undefined at the module level (global-variable-undefined)
+
+------------------------------------------------------------------
+Your code has been rated at 8.28/10 (previous run: 8.28/10, +0.00)
+
