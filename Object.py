@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#Autor: Ferreira Guillaume
+#Projet 3: parcours python openclassroom
+#Date : 15/11/2017
 
-from tkinter import *
-import os
-import re
-from PIL import Image, ImageTk
 import random
+from tkinter import Canvas, NW
 from ElementLabyrinthe import *
 
 class Objet(ElementLabyrinthe):
@@ -31,13 +31,13 @@ class Objet(ElementLabyrinthe):
             self.__valideCoordonneesObjet()
             self.canvasObjet=Canvas(FrameLabyrinthe,width=39, height=43, borderwidth=0,highlightthickness=0)
             self.canvasObjet.create_image(Objet.listeImgDecObj[id_obj], -1, anchor=NW, image=photo)
-            self.canvasObjet.place(x=self.positionX, y=self.positionY)
+            self.canvasObjet.place(x=self.position_x, y=self.position_y)
             
             
         def __valideCoordonneesObjet(self):
                 while self.situation()!=True:
-                        self.positionX=random.choice(Objet.listeCoord)
-                        self.positionY=random.choice(Objet.listeCoord)
+                        self.position_x=random.choice(Objet.listeCoord)
+                        self.position_y=random.choice(Objet.listeCoord)
                         
         def objetEstRamasser(self):
                 self.canvasObjet.destroy()

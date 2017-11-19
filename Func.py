@@ -90,7 +90,7 @@ def ramasserObjetEtVictoire(ListeObjet,Mac,ongletObjet,ongletGardien,GardienLab)
 def ramasserLesObjets(ListeObjet,Mac):
         #On regarde si MacGayver se trouve sur un objet si oui , on le supprime
         for objet in ListeObjet:
-            if Mac.ramasseObjet(objet.positionX,objet.positionY):
+            if Mac.ramasseObjet(objet.position_x,objet.position_y):
                 objet.objetEstRamasser()
                 ListeObjet.remove(objet)
 

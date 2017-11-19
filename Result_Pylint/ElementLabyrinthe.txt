@@ -1,0 +1,21 @@
+************* Module ElementLabyrinthe
+C: 37, 0: Line too long (104/100) (line-too-long)
+C: 48, 0: Line too long (110/100) (line-too-long)
+C: 71, 0: Line too long (116/100) (line-too-long)
+C: 79, 0: Line too long (118/100) (line-too-long)
+C: 80, 0: Line too long (113/100) (line-too-long)
+C: 81, 0: Line too long (113/100) (line-too-long)
+C: 82, 0: Line too long (108/100) (line-too-long)
+C: 85, 0: Line too long (263/100) (line-too-long)
+C: 88, 0: Line too long (263/100) (line-too-long)
+C: 91, 0: Line too long (263/100) (line-too-long)
+C: 94, 0: Line too long (263/100) (line-too-long)
+C:123, 0: Line too long (106/100) (line-too-long)
+R: 28, 4: Too many arguments (7/5) (too-many-arguments)
+R: 42, 4: Too many arguments (6/5) (too-many-arguments)
+W:111,12: No exception type(s) specified (bare-except)
+W:136,12: No exception type(s) specified (bare-except)
+
+------------------------------------------------------------------
+Your code has been rated at 7.38/10 (previous run: 7.38/10, +0.00)
+
