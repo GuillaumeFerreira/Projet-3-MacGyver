@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #Autor: Ferreira Guillaume
 #Projet 3: parcours python openclassroom
-#Date : 15/11/2017
+
 '''Element for building object
 
     allows to create an object and to place objects in the maze

@@ -1,0 +1,11 @@
+************* Module Personnage
+C: 24, 0: Line too long (108/100) (line-too-long)
+C:116, 0: Line too long (208/100) (line-too-long)
+C:117, 0: Line too long (216/100) (line-too-long)
+R: 13, 0: Too many instance attributes (8/7) (too-many-instance-attributes)
+W: 20, 4: __init__ method from base class 'ElementLabyrinthe' is not called (super-init-not-called)
+R: 20, 4: Too many arguments (7/5) (too-many-arguments)
+
+------------------------------------------------------------------
+Your code has been rated at 8.82/10 (previous run: 8.82/10, +0.00)
+

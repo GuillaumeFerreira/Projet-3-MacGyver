@@ -1,87 +1,120 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#Autor: Ferreira Guillaume
+#Projet 3: parcours python openclassroom
+'''
 
-from tkinter import Canvas
+    Defined all types of characters
 
-from ElementLabyrinthe import *
+'''
+from tkinter import Canvas, NW
+from ElementLabyrinthe import ElementLabyrinthe
 
 class Personnage(ElementLabyrinthe):
+    '''
 
-    def __init__(self, FrameLabyrinthe, photo, Height, se_deplacer, position_x, position_y):
-                
-        #Initialisation de l'image de MacGayver dans le labyrinthe  
-        #Position initiale de MacGayver.
-        #Position en abscisse par rapport au coin en haut à gauche.
+        class character gives the possibility to create
+        macgyver, guardian and any other character
+
+    '''
+    def __init__(self, frame_labyrinthe, photo, Height, se_deplacer, position_x, position_y):
         self.position_x = position_x
-        #Position en ordonnée par rapport au coin en haut à gauche.
         self.position_y = position_y
         self.se_deplacer = se_deplacer
-        self.canvasMacGayver = Canvas(FrameLabyrinthe, width=32, height=Height, borderwidth=0, highlightthickness=0)
-        self.canvasMacGayver.create_image(0, 0, anchor=NW, image=photo)
-        self.canvasMacGayver.place(x=self.position_x, y=self.position_y)
-        self.memoireNbObjet = 0
-        self.objetRamasser = 0
-        self.nombreDeFoisDansZone = 0
-        self.etreResortiDeLaZone = True
-        
-    @classmethod
-    def gardien(cls, FrameLabyrinthe, photo):
-        return cls(FrameLabyrinthe, photo, 36, False, 592, 570)
-    @classmethod
-    def macGayver(cls, FrameLabyrinthe, photo):    
-        return cls(FrameLabyrinthe, photo, 43, True, 51, 46)
+        self.canvas = Canvas(frame_labyrinthe, width=32, height=Height, borderwidth=0, highlightthickness=0)
+        self.canvas.create_image(0, 0, anchor=NW, image=photo)
+        self.canvas.place(x=self.position_x, y=self.position_y)
+        self.memory_objet = 0
+        self.objet_to_pick_up = 0
+        self.number_of_times_in_the_area = 0
+        self.come_out_of_the_area = True
 
-    #retourne True ou false pour savoir si MacGayver est dans la zone
+    @classmethod
+    def gardien(cls, frame_labyrinthe, photo):
+        '''
+
+            Gardien creation.
+
+        '''
+        return cls(frame_labyrinthe, photo, 36, False, 592, 570)
+    @classmethod
+    def mac_gyver(cls, frame_labyrinthe, photo):
+        '''
+
+            Macgyver creation.
+
+        '''
+        return cls(frame_labyrinthe, photo, 43, True, 51, 46)
+
     def mac_dans_zone_gardien(self):
-        if self.position_x > 555 and self.position_y > 500:
-            macInZone = True
-        else:
-            macInZone = False
-        return macInZone
-    
-    #Déplace MacGayver vers la Droite dans le labyrinthe
-    def deplacementVersDroite(self):
+        '''
+
+            If character is in zone of gardien return True.
+
+        '''
+        return bool(self.position_x > 555 and self.position_y > 500)
+
+    def move_to_the_right(self):
+        '''
+
+            Move character to the right.
+
+        '''
         if self.se_deplacer:
             self.position_x = self.position_x + 22.5
-            if self.situation(): 
-                self.canvasMacGayver.place(x=self.position_x, y=self.position_y)
+            if self.situation():
+                self.canvas.place(x=self.position_x, y=self.position_y)
             else:
                 self.position_x = self.position_x - 22.5
 
-    #Déplace MacGayver vers la Gauche dans le labyrinthe
-    def deplacementVersGauche(self):
+    def move_to_the_left(self):
+        '''
+
+            Move character to the Ledt.
+
+        '''
         if self.se_deplacer:
             self.position_x = self.position_x - 22.5
-            if self.situation():    
-                self.canvasMacGayver.place(x=self.position_x, y=self.position_y)
+            if self.situation():
+                self.canvas.place(x=self.position_x, y=self.position_y)
             else:
                 self.position_x = self.position_x + 22.5
-        
-    #Déplace MacGayver vers la Bas dans le labyrinthe
-    def deplacementVersBas(self):
+
+    def move_to_the_down(self):
+        '''
+
+            Character move down.
+
+        '''
         if self.se_deplacer:
             self.position_y = self.position_y + 22.5
             if self.situation():
-                self.canvasMacGayver.place(x=self.position_x, y=self.position_y)
+                self.canvas.place(x=self.position_x, y=self.position_y)
             else:
                 self.position_y = self.position_y - 22.5
-        
-    #Déplace MacGayver vers la Haut dans le labyrinthe
-    def deplacementVersHaut(self):
+
+    def move_to_the_up(self):
+        '''
+
+            Character move up.
+
+        '''
         if self.se_deplacer:
             self.position_y = self.position_y - 22.5
             if self.situation():
-                self.canvasMacGayver.place(x=self.position_x, y=self.position_y)
+                self.canvas.place(x=self.position_x, y=self.position_y)
             else:
                 self.position_y = self.position_y + 22.5
-            
-    def ramasseObjet(self, xDeObjet, yDeObjet):
-        possibilite_objet_ramasser = False
-        if (int(self.position_x) >= int(xDeObjet) and int(self.position_x) < int(xDeObjet + 39)) or (int(self.position_x + 32) >= int(xDeObjet) and int(self.position_x + 32) < int(xDeObjet + 39)):
-            if (int(self.position_y) >= int(yDeObjet - 10) and int(self.position_y) < int(yDeObjet + 43)) or (int(self.position_y + 43) > int(yDeObjet) and int(self.position_y + 43) < int(yDeObjet + 40)):
-                self.objetRamasser = self.objetRamasser + 1
-                possibilite_objet_ramasser = True
-            
-        return possibilite_objet_ramasser
-            
 
+    def pick_up_objet(self, x_of_object, y_of_object):
+        '''
+
+            Object is picked up by the character.
+
+        '''
+        possibilite_objet_ramasser = False
+        if (int(self.position_x) >= int(x_of_object) and int(self.position_x) < int(x_of_object + 39)) or (int(self.position_x + 32) >= int(x_of_object) and int(self.position_x + 32) < int(x_of_object + 39)):
+            if (int(self.position_y) >= int(y_of_object - 10) and int(self.position_y) < int(y_of_object + 43)) or (int(self.position_y + 43) > int(y_of_object) and int(self.position_y + 43) < int(y_of_object + 40)):
+                self.objet_to_pick_up = self.objet_to_pick_up + 1
+                possibilite_objet_ramasser = True
+        return possibilite_objet_ramasser

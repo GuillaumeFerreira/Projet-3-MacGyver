@@ -54,7 +54,7 @@ def main():
     #création de MacGayver
     photoMacGayver=PhotoImage(file="images/macgyver.gif")
     
-    Mac=Personnage.macGayver(frameLabyrinthe.frame,photoMacGayver)
+    Mac=Personnage.mac_gyver(frameLabyrinthe.frame,photoMacGayver)
     #################################################
     #################################################
     #Creation de la liste d objets
@@ -103,20 +103,20 @@ def victoireOrNot():
         pass
     
 def versDroite(evt):
-   Mac.deplacementVersDroite()
+   Mac.move_to_the_right()
    victoireOrNot()
 
 
 def versGauche(evt):
-   Mac.deplacementVersGauche()
+   Mac.move_to_the_left()
    victoireOrNot()
    
 def versHaut(evt):
-   Mac.deplacementVersHaut()
+   Mac.move_to_the_up()
    victoireOrNot()
    
 def versBas(evt):
-   Mac.deplacementVersBas()
+   Mac.move_to_the_down()
    victoireOrNot()
    
 def perdu():
