@@ -48,7 +48,7 @@ def main():
     #################################################
     #Initialisation et construction de labyrinthe
     photo = PhotoImage(file="images/wall.gif")
-    creationDuLabyrinthe(photo,frameLabyrinthe.frame)
+    creation_of_the_labyrinth(photo,frameLabyrinthe.frame)
     #################################################
     #################################################
     #création de MacGayver
@@ -94,7 +94,7 @@ def main():
     fenetre.fenetre.mainloop()
     
 def victoireOrNot(): 
-    situation=ramasserObjetEtVictoire(ListeObjet,Mac,ongletObjet,ongletGardien,GardienLab)
+    situation=pick_up_objects_and_win(ListeObjet,Mac,ongletObjet,ongletGardien,GardienLab)
     if situation==1:
        perdu()
     elif situation==2:

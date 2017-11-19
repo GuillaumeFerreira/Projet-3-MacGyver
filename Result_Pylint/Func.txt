@@ -1,0 +1,13 @@
+************* Module Func
+C: 37, 0: Line too long (109/100) (line-too-long)
+C: 67, 0: Line too long (106/100) (line-too-long)
+C: 69, 0: Line too long (128/100) (line-too-long)
+C: 70, 0: Line too long (107/100) (line-too-long)
+C: 71, 0: Line too long (228/100) (line-too-long)
+C: 75, 0: Line too long (216/100) (line-too-long)
+C: 77, 0: Line too long (218/100) (line-too-long)
+W: 38,12: No exception type(s) specified (bare-except)
+
+------------------------------------------------------------------
+Your code has been rated at 8.55/10 (previous run: 8.55/10, +0.00)
+
