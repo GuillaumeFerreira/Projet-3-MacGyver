@@ -7,10 +7,10 @@
 '''
 from tkinter import PhotoImage, Canvas, NW, Button, Label
 from PIL import Image, ImageTk
-from Personnage import Personnage
-from Object import Objet
-from ElementTK import Fenetre, FrameLab, Onglet
-from Func import creation_of_the_labyrinth, pick_up_objects_and_win
+from doc_class.Personnage import Personnage
+from doc_class.Object import Objet
+from doc_class.ElementTK import Fenetre, FrameLab, Onglet
+from utils.Func import creation_of_the_labyrinth, pick_up_objects_and_win
 
 
 def main():

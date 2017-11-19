@@ -8,7 +8,7 @@
 
 '''
 from tkinter import Canvas, NW
-from ElementLabyrinthe import ElementLabyrinthe
+from doc_class.ElementLabyrinthe import ElementLabyrinthe
 
 class Personnage(ElementLabyrinthe):
     '''

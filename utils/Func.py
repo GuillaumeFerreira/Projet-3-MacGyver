@@ -7,7 +7,7 @@
 
 '''
 import re
-from ElementLabyrinthe import ElementLabyrinthe
+from doc_class.ElementLabyrinthe import ElementLabyrinthe
 
 
 def creation_of_the_labyrinth(photo, frame_fabyrinthe):
@@ -16,14 +16,14 @@ def creation_of_the_labyrinth(photo, frame_fabyrinthe):
         Initialization and construction of labyrinth
 
     '''
-    file = open("Mac.txt", "r")
+    file = open("config\Mac.txt", "r")
     i = 0
     for line in file:
 
         search_num_img_rule = re.search(r'-->(.+)', line)
         num_img_rule = search_num_img_rule.group(1)
 
-        f_lab = open("DroitLab.txt", "r")
+        f_lab = open("config\DroitLab.txt", "r")
 
         for line_d in f_lab:
 

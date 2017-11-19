@@ -100,7 +100,7 @@ class ElementLabyrinthe:
             Referral the rules of the image look.
 
         '''
-        file = open("Mac.txt", "r")
+        file = open("config\Mac.txt", "r")
         for line in file:
 
             try:
@@ -115,7 +115,7 @@ class ElementLabyrinthe:
                 #rien a faire pas la bonne ligne
                 pass
 
-        file_lab = open("DroitLab.txt", "r")
+        file_lab = open("config\DroitLab.txt", "r")
 
         for line_d in file_lab:
 
