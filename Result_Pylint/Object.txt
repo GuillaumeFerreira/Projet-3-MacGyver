@@ -1,0 +1,7 @@
+************* Module Object
+C: 32, 0: Line too long (109/100) (line-too-long)
+W: 29, 4: __init__ method from base class 'ElementLabyrinthe' is not called (super-init-not-called)
+
+------------------------------------------------------------------
+Your code has been rated at 9.29/10 (previous run: 9.29/10, +0.00)
+

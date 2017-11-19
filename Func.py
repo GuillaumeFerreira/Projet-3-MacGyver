@@ -91,7 +91,7 @@ def ramasserLesObjets(ListeObjet,Mac):
         #On regarde si MacGayver se trouve sur un objet si oui , on le supprime
         for objet in ListeObjet:
             if Mac.ramasseObjet(objet.position_x,objet.position_y):
-                objet.objetEstRamasser()
+                objet.object_is_picked_up()
                 ListeObjet.remove(objet)
 
 def nombreObjetRamasser(Mac,ongletObjet):
